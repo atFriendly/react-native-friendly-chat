@@ -1,14 +1,13 @@
 {
   "name": "react-native-friendly-chat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The most complete chat UI for React Native",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/afFriendly/react-native-friendly-chat.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "atFriendly",
   "license": "MIT",
   "bugs": {
