@@ -1,3 +1,5 @@
+# Forked from [react-native-gifted-chat](https://github.com/FaridSafi/react-native-gifted-chat)
+
 # Gifted Chat
 The most complete chat UI for React Native (formerly known as Gifted Messenger)
 
@@ -5,11 +7,13 @@ The most complete chat UI for React Native (formerly known as Gifted Messenger)
 ![](https://raw.githubusercontent.com/FaridSafi/react-native-gifted-chat/master/screenshots/gifted-chat-2.png)
 
 ## Dependency
+React Native minimum version `0.39.2`
+=======
 Use `0.0.10` for RN < `0.40.0`  
 Use `0.1.0` for RN >= `0.40.0`
 
 ## Installation
-`npm install react-native-gifted-chat --save`
+`npm install react-native-friendly-chat --save`
 
 ## Android installation
 - Add `android:windowSoftInputMode="adjustResize"` to your Android Manifest `android/app/src/main/AndroidManifest.xml`

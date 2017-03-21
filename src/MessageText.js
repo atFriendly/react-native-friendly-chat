@@ -8,6 +8,7 @@ import {
 
 import ParsedText from 'react-native-parsed-text';
 import Communications from 'react-native-communications';
+import I18nUtil from './I18nUtil';
 
 export default class MessageText extends React.Component {
   constructor(props) {
@@ -23,9 +24,9 @@ export default class MessageText extends React.Component {
 
   onPhonePress(phone) {
     const options = [
-      'Text',
-      'Call',
-      'Cancel',
+      I18nUtil.get('Sms'),
+      I18nUtil.get('Call'),
+      I18nUtil.get('Cancel'),
     ];
     const cancelButtonIndex = options.length - 1;
     this.context.actionSheet().showActionSheetWithOptions({
