@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import I18nUtil from './I18nUtil';
 
 export default class LoadEarlier extends React.Component {
   renderLoading() {
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 LoadEarlier.defaultProps = {
   onLoadEarlier: () => {},
   isLoadingEarlier: false,
-  label: 'Load earlier messages',
+  label: I18nUtil.get('LoadEarlierMessage'),
   containerStyle: {},
   wrapperStyle: {},
   textStyle: {},

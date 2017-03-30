@@ -50,9 +50,9 @@ const styles = {
     },
     onBottom: {},
     image: {
-      height: 36,
-      width: 36,
-      borderRadius: 18,
+      height: 24,
+      width: 55,
+      borderRadius: 4,
     },
   }),
   right: StyleSheet.create({

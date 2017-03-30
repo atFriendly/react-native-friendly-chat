@@ -43,7 +43,8 @@ export default class GiftedAvatar extends React.Component {
       '#2c3e50', // midnight blue
     ];
 
-    this.avatarColor = colors[sumChars % colors.length];
+    // this.avatarColor = colors[sumChars % colors.length];
+	this.avatarColor = '#AAA';
   }
 
   renderAvatar() {
@@ -131,7 +132,7 @@ const defaultStyles = {
   },
   textStyle: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     backgroundColor: 'transparent',
     fontWeight: '100',
   },
