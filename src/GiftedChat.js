@@ -26,6 +26,7 @@ import MessageContainer from './MessageContainer';
 import Send from './Send';
 import Time from './Time';
 import GiftedAvatar from './GiftedAvatar';
+import I18nUtil from './I18nUtil';
 
 // Min and max heights of ToolbarInput and Composer
 // Needed for Composer auto grow and ScrollView animation
@@ -115,11 +116,14 @@ class GiftedChat extends React.Component {
   }
 
   initLocale() {
+	let locale = 'en';
     if (this.props.locale === null || moment.locales().indexOf(this.props.locale) === -1) {
-      this.setLocale('en');
+      locale = 'en';
     } else {
-      this.setLocale(this.props.locale);
+      locale = this.props.locale;
     }
+	this.setLocale(locale);
+	I18nUtil.setLocale(locale);
   }
 
   initMessages(messages = []) {

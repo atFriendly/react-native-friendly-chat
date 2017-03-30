@@ -9,18 +9,18 @@ module.exports = {
 		MessagePlaceholder: 'Type a message...',
 		LoadEarlierMessage: 'Load earlier messages',
 	},
-	'zh-TW': {
+	'zh-tw': {
 		Cancel: '取消',
 		Call: '撥號',
 		Sms: '簡訊',
 		MessagePlaceholder: '在此輸入訊息...',
-		LoadEarlierMessage: '載入更早的訊息',
+		LoadEarlierMessage: '載入更早訊息',
 	},
-	'zh-CN': {
+	'zh-cn': {
 		Cancel: '取消',
 		Call: '拨号',
 		Sms: '短信',
 		MessagePlaceholder: '在此输入信息...',
-		LoadEarlierMessage: '载入更早的信息',
+		LoadEarlierMessage: '载入更早信息',
 	},
 };

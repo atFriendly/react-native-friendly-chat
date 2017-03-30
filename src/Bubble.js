@@ -34,6 +34,8 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageText() {
+	if(this.props.currentMessage.image)//don't show text on image message
+		return null;
     if (this.props.currentMessage.text) {
       const {containerStyle, wrapperStyle, ...messageTextProps} = this.props;
       if (this.props.renderMessageText) {
