@@ -15,6 +15,10 @@ export default class I18nUtil {
 		}
 	}
 
+	/**
+	 * set locale code
+	 * @param {string} loc locale
+	 */
 	static setLocale(loc) {
 		locale = loc;
 	}

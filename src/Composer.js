@@ -73,7 +73,9 @@ Composer.defaultProps = {
   placeholderTextColor: '#b2b2b2',
   textInputProps: null,
   multiline: true,
-  textInputStyle: {},
+  textInputStyle: {
+	  color: '#888'
+  },
   onTextChanged: () => {
   },
   onInputSizeChanged: () => {
