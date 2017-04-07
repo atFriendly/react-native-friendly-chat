@@ -217,7 +217,7 @@ class GiftedChat extends React.Component {
     this.setKeyboardHeight(e.endCoordinates ? e.endCoordinates.height : e.end.height);
     this.setBottomOffset(this.props.bottomOffset);
     // const newMessagesContainerHeight = (this.getMaxHeight() - (this.state.composerHeight + (this.getMinInputToolbarHeight() - MIN_COMPOSER_HEIGHT))) - this.getKeyboardHeight() + this.getBottomOffset();
-	const newMessagesContainerHeight = (this.getMaxHeight() - (this.state.composerHeight + (this.getMinInputToolbarHeight() - MIN_COMPOSER_HEIGHT)))   - this.getKeyboardHeight() + this.getBottomOffset();
+	const newMessagesContainerHeight = (this.getMaxHeight() - (this.state.composerHeight + (this.getMinInputToolbarHeight() - MIN_COMPOSER_HEIGHT)))    + this.getBottomOffset();
 	// console.log('onKeyboardWillShow (' + this.getMaxHeight() + ' - (' + this.state.composerHeight + ' + (' +
 	// 	this.getMinInputToolbarHeight() + ' - ' + MIN_COMPOSER_HEIGHT + ') ) ) - ' + this.getKeyboardHeight() + 
 	// 	' + ' + this.getBottomOffset() + ' = ' + newMessagesContainerHeight);
@@ -340,8 +340,8 @@ class GiftedChat extends React.Component {
 
   onInputSizeChanged(size) {
     const newComposerHeight = Math.max(MIN_COMPOSER_HEIGHT, Math.min(MAX_COMPOSER_HEIGHT, size.height));
-    const newMessagesContainerHeight = this.getMaxHeight() - this.calculateInputToolbarHeight(newComposerHeight) - this.getKeyboardHeight() + this.getBottomOffset();
-	// const newMessagesContainerHeight = this.getMaxHeight() - this.calculateInputToolbarHeight(newComposerHeight) + this.getBottomOffset();
+    // const newMessagesContainerHeight = this.getMaxHeight() - this.calculateInputToolbarHeight(newComposerHeight) - this.getKeyboardHeight() + this.getBottomOffset();
+	const newMessagesContainerHeight = this.getMaxHeight() - this.calculateInputToolbarHeight(newComposerHeight) + this.getBottomOffset();
     this.setState({
       composerHeight: newComposerHeight,
       messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
