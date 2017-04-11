@@ -9,6 +9,7 @@ import {
 
 import MessageText from './MessageText';
 import MessageImage from './MessageImage';
+import MessageProgress from './MessageProgress';
 import Time from './Time';
 
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
@@ -55,6 +56,14 @@ export default class Bubble extends React.Component {
       return <MessageImage {...messageImageProps}/>;
     }
     return null;
+  }
+
+  renderMessageProgress() {
+	  if (this.props.currentMessage.progress) {
+		const {containerStyle, wrapperStyle, ...messageProgressProps} = this.props;
+		return <MessageProgress {...messageProgressProps}/>;
+	  }
+	  return null;
   }
 
   renderTicks() {
@@ -131,6 +140,7 @@ export default class Bubble extends React.Component {
               {this.renderCustomView()}
               {this.renderMessageImage()}
               {this.renderMessageText()}
+			  {this.renderMessageProgress()}
               <View style={styles.bottom}>
                 {this.renderTime()}
                 {this.renderTicks()}
@@ -213,6 +223,7 @@ Bubble.defaultProps = {
     text: null,
     createdAt: null,
     image: null,
+	progress: null,
   },
   nextMessage: {},
   previousMessage: {},
