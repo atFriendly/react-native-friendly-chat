@@ -36,7 +36,7 @@ export default class Bubble extends React.Component {
 
   renderMessageText() {
 	if(this.props.currentMessage.image 
-		|| this.props.currentMessage.progress || this.props.currentMessage.filePath)//don't show text on image/file/progress message
+		|| this.props.currentMessage.progress)//don't show text on image/progress message
 		return null;
     if (this.props.currentMessage.text) {
       const {containerStyle, wrapperStyle, ...messageTextProps} = this.props;
