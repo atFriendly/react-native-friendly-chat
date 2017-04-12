@@ -8,6 +8,7 @@ module.exports = {
 		Sms: 'SMS',
 		MessagePlaceholder: 'Type a message...',
 		LoadEarlierMessage: 'Load earlier messages',
+		Download: 'Download',
 	},
 	'zh-tw': {
 		Cancel: '取消',
@@ -15,6 +16,7 @@ module.exports = {
 		Sms: '簡訊',
 		MessagePlaceholder: '在此輸入訊息...',
 		LoadEarlierMessage: '載入更早訊息',
+		Download: '下載',
 	},
 	'zh-cn': {
 		Cancel: '取消',
@@ -22,5 +24,6 @@ module.exports = {
 		Sms: '短信',
 		MessagePlaceholder: '在此输入信息...',
 		LoadEarlierMessage: '载入更早信息',
+		Download: '下载',
 	},
 };

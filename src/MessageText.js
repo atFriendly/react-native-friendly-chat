@@ -8,7 +8,8 @@ import {
 
 import ParsedText from 'react-native-parsed-text';
 import Communications from 'react-native-communications';
-import I18nUtil from './I18nUtil';
+import Hyperlink from 'react-native-hyperlink';
+import I18n from './I18nUtil';
 
 export default class MessageText extends React.Component {
   constructor(props) {
@@ -24,9 +25,9 @@ export default class MessageText extends React.Component {
 
   onPhonePress(phone) {
     const options = [
-      I18nUtil.get('Sms'),
-      I18nUtil.get('Call'),
-      I18nUtil.get('Cancel'),
+      I18n.get('Sms'),
+      I18n.get('Call'),
+      I18n.get('Cancel'),
     ];
     const cancelButtonIndex = options.length - 1;
     this.context.actionSheet().showActionSheetWithOptions({
@@ -49,6 +50,19 @@ export default class MessageText extends React.Component {
     Communications.email(email, null, null, null, null);
   }
 
+  renderFileLink() {
+	  if (this.props.currentMessage.filePath) {
+		return (
+			<Hyperlink linkText={I18n.get('Download')} onPress={ url => this.onUrlPress(url) }>
+				<Text style={{fontSize: 16, marginTop: 5, marginBottom: 5}}>
+					{this.props.currentMessage.filePath}
+				</Text>
+			</Hyperlink>
+		);
+	  }
+	  return null;
+  }
+
   render() {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
@@ -62,6 +76,7 @@ export default class MessageText extends React.Component {
         >
           {this.props.currentMessage.text}
         </ParsedText>
+		{this.renderFileLink()}
       </View>
     );
   }

@@ -35,7 +35,8 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageText() {
-	if(this.props.currentMessage.image)//don't show text on image message
+	if(this.props.currentMessage.image 
+		|| this.props.currentMessage.progress || this.props.currentMessage.filePath)//don't show text on image/file/progress message
 		return null;
     if (this.props.currentMessage.text) {
       const {containerStyle, wrapperStyle, ...messageTextProps} = this.props;
@@ -48,6 +49,8 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageImage() {
+	  if (this.props.currentMessage.progress)
+	  	return null;
     if (this.props.currentMessage.image) {
       const {containerStyle, wrapperStyle, ...messageImageProps} = this.props;
       if (this.props.renderMessageImage) {
@@ -128,9 +131,13 @@ export default class Bubble extends React.Component {
   }
 
   render() {
+	  let uploadStyle = {};
+	  if (this.props.currentMessage.progress) {
+		  uploadStyle = { borderWidth: 0, backgroundColor: 'transparent' };
+	  }
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
-        <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious()]}>
+        <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious(), uploadStyle]}>
           <TouchableWithoutFeedback
             onLongPress={this.onLongPress}
             accessibilityTraits="text"
