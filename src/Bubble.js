@@ -10,6 +10,7 @@ import {
 import MessageText from './MessageText';
 import MessageImage from './MessageImage';
 import MessageProgress from './MessageProgress';
+import DownloadLink from './DownloadLink';
 import Time from './Time';
 
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
@@ -59,6 +60,14 @@ export default class Bubble extends React.Component {
       return <MessageImage {...messageImageProps}/>;
     }
     return null;
+  }
+
+  renderDownloadLink() {
+	  if (this.props.currentMessage.filePath) {
+		const {containerStyle, wrapperStyle, ...messageProps} = this.props;
+		return <DownloadLink {...messageProps}/>;
+	  }
+	  return null;
   }
 
   renderMessageProgress() {
@@ -147,6 +156,7 @@ export default class Bubble extends React.Component {
               {this.renderCustomView()}
               {this.renderMessageImage()}
               {this.renderMessageText()}
+			  {this.renderDownloadLink()}
 			  {this.renderMessageProgress()}
               <View style={styles.bottom}>
                 {this.renderTime()}

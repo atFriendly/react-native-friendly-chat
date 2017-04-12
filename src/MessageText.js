@@ -50,19 +50,6 @@ export default class MessageText extends React.Component {
     Communications.email(email, null, null, null, null);
   }
 
-  renderFileLink() {
-	  if (this.props.currentMessage.filePath) {
-		return (
-			<Hyperlink linkText={I18n.get('Download')} linkStyle={styles[this.props.position].fileLinkStyle} onPress={ url => this.onUrlPress(url) }>
-				<Text style={styles[this.props.position].fileLinkStyle}>
-					{this.props.currentMessage.filePath}
-				</Text>
-			</Hyperlink>
-		);
-	  }
-	  return null;
-  }
-
   render() {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
@@ -76,7 +63,6 @@ export default class MessageText extends React.Component {
         >
           {this.props.currentMessage.text}
         </ParsedText>
-		{this.renderFileLink()}
       </View>
     );
   }
@@ -103,14 +89,6 @@ const styles = {
       color: 'black',
       textDecorationLine: 'underline',
     },
-	fileLinkStyle: {
-		fontSize: 16, 
-		marginTop: 2, 
-		marginBottom: 3,
-		marginLeft: 10,
-		alignSelf: 'flex-start',
-		textDecorationLine: 'underline',
-	},
   }),
   right: StyleSheet.create({
     container: {
@@ -123,14 +101,6 @@ const styles = {
       color: 'white',
       textDecorationLine: 'underline',
     },
-	fileLinkStyle: {
-		fontSize: 16, 
-		marginTop: 2, 
-		marginBottom: 3,
-		marginRight: 10,
-		alignSelf: 'flex-end',
-		textDecorationLine: 'underline',
-	},
   }),
 };
 
