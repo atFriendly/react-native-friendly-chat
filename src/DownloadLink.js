@@ -12,7 +12,6 @@ import I18n from './I18nUtil';
 export default class DownloadLink extends React.Component {
 	constructor(props) {
 		super(props);
-		this.onUrlPress = this.onUrlPress.bind(this);
 	}
 
 	render() {
