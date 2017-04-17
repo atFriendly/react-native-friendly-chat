@@ -20,7 +20,7 @@ export default class Time extends React.Component {
 }
 
 const containerStyle = {
-  marginLeft: 10,
+  marginLeft: 3,
   marginRight: 10,
   marginBottom: 5,
 };

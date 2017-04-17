@@ -12,6 +12,7 @@ import MessageImage from './MessageImage';
 import MessageProgress from './MessageProgress';
 import DownloadLink from './DownloadLink';
 import Time from './Time';
+import I18n from './I18nUtil';
 
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
 
@@ -87,10 +88,13 @@ export default class Bubble extends React.Component {
         return;
     }
     if (currentMessage.sent || currentMessage.received) {
+		let readCount = '';
+		if (currentMessage.countMessageReadStatus && currentMessage.countMessageReadStatus > 0)
+			readCount = currentMessage.countMessageReadStatus;
       return (
         <View style={styles.tickView}>
           {currentMessage.sent && <Text style={[styles.tick, this.props.tickStyle]}>✓</Text>}
-          {currentMessage.received && <Text style={[styles.tick, this.props.tickStyle]}>✓</Text>}
+          {currentMessage.received && <Text style={[styles.tick, this.props.tickStyle]}>{I18n.get('Received') + readCount}</Text>}
         </View>
       )
     }
@@ -159,8 +163,8 @@ export default class Bubble extends React.Component {
 			  {this.renderDownloadLink()}
 			  {this.renderMessageProgress()}
               <View style={styles.bottom}>
-                {this.renderTime()}
                 {this.renderTicks()}
+                {this.renderTime()}
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -220,7 +224,7 @@ const styles = {
   },
   tickView: {
     flexDirection: 'row',
-    marginRight: 10,
+    marginRight: 2,
   }
 };
 

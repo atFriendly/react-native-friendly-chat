@@ -9,6 +9,7 @@ module.exports = {
 		MessagePlaceholder: 'Type a message...',
 		LoadEarlierMessage: 'Load earlier messages',
 		Download: 'Download',
+		Received: '✓',
 	},
 	'zh-tw': {
 		Cancel: '取消',
@@ -17,6 +18,7 @@ module.exports = {
 		MessagePlaceholder: '在此輸入訊息...',
 		LoadEarlierMessage: '載入更早訊息',
 		Download: '下載',
+		Received: '已讀',
 	},
 	'zh-cn': {
 		Cancel: '取消',
@@ -25,5 +27,6 @@ module.exports = {
 		MessagePlaceholder: '在此输入信息...',
 		LoadEarlierMessage: '载入更早信息',
 		Download: '下载',
+		Received: '已读',
 	},
 };

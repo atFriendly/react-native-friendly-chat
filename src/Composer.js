@@ -4,7 +4,7 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
-import I18nUtil from './I18nUtil';
+import I18n from './I18nUtil';
 
 export default class Composer extends React.Component {
   onChange(e) {
@@ -69,7 +69,7 @@ Composer.defaultProps = {
     android: 41,
   }), // TODO SHARE with GiftedChat.js and tests
   text: '',
-  placeholder: I18nUtil.get('MessagePlaceholder'),
+  placeholder: I18n.get('MessagePlaceholder'),
   placeholderTextColor: '#b2b2b2',
   textInputProps: null,
   multiline: true,
