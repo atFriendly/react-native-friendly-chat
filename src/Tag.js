@@ -14,7 +14,7 @@ export default class Tag extends React.Component {
 			return null;
 		return (
 			<Text style={[styles.text, this.props.textStyle]}>
-				{moment(this.props.currentMessage.createdAt).locale(this.context.getLocale()).format('MM.dd HH:mm').toUpperCase()}
+				{moment(this.props.currentMessage.createdAt).locale(this.context.getLocale()).format('MM.DD HH:mm').toUpperCase()}
 			</Text>
 		);
 	}
