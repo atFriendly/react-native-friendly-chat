@@ -7,6 +7,7 @@ import {
 import Avatar from './Avatar';
 import Bubble from './Bubble';
 import Day from './Day';
+import Tag from './Tag';
 
 import {isSameUser, isSameDay} from './utils';
 
@@ -19,6 +20,15 @@ export default class Message extends React.Component {
       isSameUser,
       isSameDay
     }
+
+  }
+
+  renderTag() {
+	  if (this.props.currentMessage.isTag) {
+		  const tagProps = this.getInnerComponentProps();
+		  return <Tag {...tagProps} />;
+	  }
+	  return null;
   }
 
   renderDay() {
@@ -52,18 +62,21 @@ export default class Message extends React.Component {
   }
 
   render() {
-    return (
-      <View>
-        {this.renderDay()}
-        <View style={[styles[this.props.position].container, {
-          marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
-        }, this.props.containerStyle[this.props.position]]}>
-          {this.props.position === 'left' ? this.renderAvatar() : null}
-          {this.renderBubble()}
-          {this.props.position === 'right' ? this.renderAvatar() : null}
-        </View>
-      </View>
-    );
+	  if (this.props.currentMessage.isTag) {
+		  return this.renderTag();
+	  }
+	  return (
+		  <View>
+			  {this.renderDay()}
+			  <View style={[styles[this.props.position].container, {
+				  marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
+			  }, this.props.containerStyle[this.props.position]]}>
+				  {this.props.position === 'left' ? this.renderAvatar() : null}
+				  {this.renderBubble()}
+				  {this.props.position === 'right' ? this.renderAvatar() : null}
+			  </View>
+		  </View>
+	  );
   }
 }
 
