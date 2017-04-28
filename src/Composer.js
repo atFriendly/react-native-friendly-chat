@@ -35,7 +35,7 @@ export default class Composer extends React.Component {
         style={[styles.textInput, this.props.textInputStyle, {height: this.props.composerHeight}]}
 
         value={this.props.text}
-        accessibilityLabel={this.props.text || this.props.placeholder}
+        accessibilityLabel={this.props.text || I18n.get('MessagePlaceholder')}
         enablesReturnKeyAutomatically={true}
         underlineColorAndroid="transparent"
         {...this.props.textInputProps}
@@ -69,7 +69,7 @@ Composer.defaultProps = {
     android: 41,
   }), // TODO SHARE with GiftedChat.js and tests
   text: '',
-  placeholder: I18n.get('MessagePlaceholder'),
+  placeholder: 'Text here',
   placeholderTextColor: '#b2b2b2',
   textInputProps: null,
   multiline: true,

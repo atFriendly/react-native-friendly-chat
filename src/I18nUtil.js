@@ -1,5 +1,8 @@
 import I18n from 'react-native-i18n';
 const data = require('./data/i18n_data.js');
+data['zh-Hant-TW'] = data['zh-TW'];
+data['zh-Hant-US'] = data['zh-TW'];
+data['zh-Hans-US'] = data['zh-CN'];
 let locale = I18n.locale.toLowerCase();
 
 export default class I18nUtil {

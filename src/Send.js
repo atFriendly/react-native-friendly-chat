@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import I18n from './I18nUtil';
 
 export default class Send extends React.Component {
   // shouldComponentUpdate(nextProps, nextState) {
@@ -23,7 +24,7 @@ export default class Send extends React.Component {
           }}
           accessibilityTraits="button"
         >
-          <Text style={[styles.text, this.props.textStyle]}>{this.props.label}</Text>
+          <Text style={[styles.text, this.props.textStyle]}>{I18n.get('Send')}</Text>
         </TouchableOpacity>
       );
     }
