@@ -25,7 +25,7 @@ export default class Composer extends React.Component {
   render() {
     return (
       <TextInput
-        placeholder={this.props.placeholder}
+        placeholder={I18n.get('MessagePlaceholder')}//this.props.placeholder
         placeholderTextColor={this.props.placeholderTextColor}
         multiline={this.props.multiline}
 
@@ -35,7 +35,7 @@ export default class Composer extends React.Component {
         style={[styles.textInput, this.props.textInputStyle, {height: this.props.composerHeight}]}
 
         value={this.props.text}
-        accessibilityLabel={this.props.text || I18n.get('MessagePlaceholder')}
+        accessibilityLabel={this.props.text || I18n.get('MessagePlaceholder')} //this.props.placeholder
         enablesReturnKeyAutomatically={true}
         underlineColorAndroid="transparent"
         {...this.props.textInputProps}

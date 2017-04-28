@@ -117,13 +117,13 @@ class GiftedChat extends React.Component {
 
   initLocale() {
 	let locale = 'en';
-    if (this.props.locale === null || moment.locales().indexOf(this.props.locale) === -1) {
+    if (this.props.locale === null && moment.locales().indexOf(this.props.locale) === -1) {
       locale = 'en';
     } else {
       locale = this.props.locale;
     }
-	this.setLocale(locale);
 	I18nUtil.setLocale(locale);
+	this.setLocale(I18nUtil.getLocale());
   }
 
   initMessages(messages = []) {
