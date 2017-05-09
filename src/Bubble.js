@@ -144,7 +144,7 @@ export default class Bubble extends React.Component {
   }
 
   renderResend() {
-		if (/*!this.props.currentMessage.notSent ||*/ this.props.position === 'left')
+		if (!this.props.currentMessage.notSent || this.props.position === 'left')
 			return null;
 		const icon = Platform.select({
 			ios: require('./images/refresh-ios10.png'),
