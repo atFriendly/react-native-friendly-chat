@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import I18nUtil from './I18nUtil';
+import I18n from './I18nUtil';
 
 export default class LoadEarlier extends React.Component {
   renderLoading() {
     if (this.props.isLoadingEarlier === false) {
       return (
         <Text style={[styles.text, this.props.textStyle]}>
-          {this.props.label}
+          {I18n.get('LoadEarlierMessage')/*this.props.label*/}
         </Text>
       );
     }
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 LoadEarlier.defaultProps = {
   onLoadEarlier: () => {},
   isLoadingEarlier: false,
-  label: I18nUtil.get('LoadEarlierMessage'),
+  label: 'Load earlier messages',
   containerStyle: {},
   wrapperStyle: {},
   textStyle: {},
