@@ -1,10 +1,7 @@
 import React from 'react';
 import {
   View,
-  Image,
-  Text,
   StyleSheet,
-  TouchableWithoutFeedback
 } from 'react-native';
 
 import Avatar from './Avatar';
@@ -64,24 +61,6 @@ export default class Message extends React.Component {
     return null;
   }
 
-	renderResend() {
-		// if (!this.props.currentMessage.notSent)
-		// 	return null;
-		return (
-			<TouchableWithoutFeedback accessibilityTraits="text"
-				onPress={ () => {
-					this.props.onResend({...this.props.currentMessage})
-				}}>
-				<View style={{flexDirection: 'column', marginRight: 2,}}>
-					<Image style={{width: 36, height: 36}} source={{uri: './images/refresh-ios10.png'}} />
-					<Text style={{fontSize: 12, color: '#444'}}>
-						{'重新傳送'}
-					</Text>
-				</View>
-			</TouchableWithoutFeedback>
-		);
-	}
-
   render() {
 	  if (this.props.currentMessage.isTag) {
 		  return this.renderTag();
@@ -93,7 +72,6 @@ export default class Message extends React.Component {
 				  marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
 			  }, this.props.containerStyle[this.props.position]]}>
 				  {this.props.position === 'left' ? this.renderAvatar() : null}
-				  {this.renderResend()}
 				  {this.renderBubble()}
 				  {this.props.position === 'right' ? this.renderAvatar() : null}
 			  </View>
