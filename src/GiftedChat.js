@@ -465,6 +465,8 @@ GiftedChat.defaultProps = {
   messages: [],
   onSend: () => {
   },
+  onResend: () => {
+  },
   loadEarlier: false,
   onLoadEarlier: () => {
   },
@@ -503,6 +505,7 @@ GiftedChat.defaultProps = {
 GiftedChat.propTypes = {
   messages: React.PropTypes.array,
   onSend: React.PropTypes.func,
+  onResend: React.PropTypes.func,
   onInputTextChanged: React.PropTypes.func,
   loadEarlier: React.PropTypes.bool,
   onLoadEarlier: React.PropTypes.func,
