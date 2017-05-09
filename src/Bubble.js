@@ -225,6 +225,7 @@ const styles = {
   tickView: {
     flexDirection: 'row',
     marginRight: 2,
+	marginLeft: 6,
   }
 };
 
