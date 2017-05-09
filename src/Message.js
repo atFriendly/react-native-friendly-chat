@@ -68,7 +68,10 @@ export default class Message extends React.Component {
 		// if (!this.props.currentMessage.notSent)
 		// 	return null;
 		return (
-			<TouchableWithoutFeedback onPress={this.props.onResend({...this.props.currentMessage})}	accessibilityTraits="text">
+			<TouchableWithoutFeedback accessibilityTraits="text"
+				onPress={ () => {
+					this.props.onResend({...this.props.currentMessage})
+				}}>
 				<View style={{flexDirection: 'column', marginRight: 2,}}>
 					<Image style={{width: 36, height: 36}} source={{uri: './images/refresh-ios10.png'}} />
 					<Text style={{fontSize: 12, color: '#444'}}>

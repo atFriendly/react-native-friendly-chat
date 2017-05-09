@@ -143,6 +143,28 @@ export default class Bubble extends React.Component {
     }
   }
 
+  renderResend() {
+		if (/*!this.props.currentMessage.notSent ||*/ this.props.position === 'left')
+			return null;
+		const icon = Platform.select({
+			ios: require('./images/refresh-ios10.png'),
+			android: require('./images/refresh-android.png')
+		});
+		return (
+			<TouchableOpacity accessibilityTraits="button"
+				onPress={ () => {
+					this.props.onResend({...this.props.currentMessage})
+				}}>
+				<View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginRight: 2,}}>
+					<Image style={{width: 18, height: 18}} source={icon} />
+					<Text style={{fontSize: 9, color: '#444'}}>
+						{'重新傳送'}
+					</Text>
+				</View>
+			</TouchableOpacity>
+		);
+	}
+
   render() {
 	  let uploadStyle = {};
 	  if (this.props.currentMessage.progress) {
@@ -150,6 +172,7 @@ export default class Bubble extends React.Component {
 	  }
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
+	  	{this.renderResend()}
         <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious(), uploadStyle]}>
           <TouchableWithoutFeedback
             onLongPress={this.onLongPress}
@@ -178,6 +201,7 @@ const styles = {
   left: StyleSheet.create({
     container: {
       flex: 1,
+	  flexDirection: 'row',
       alignItems: 'flex-start',
     },
     wrapper: {
@@ -197,12 +221,14 @@ const styles = {
   right: StyleSheet.create({
     container: {
       flex: 1,
+	  flexDirection: 'row',
       alignItems: 'flex-end',
+	  justifyContent: 'flex-end',
     },
     wrapper: {
       borderRadius: 15,
       backgroundColor: '#0084ff',
-      marginLeft: 60,
+    //   marginLeft: 60,
       minHeight: 20,
       justifyContent: 'flex-end',
     },
