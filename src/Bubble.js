@@ -1,8 +1,11 @@
 import React from 'react';
 import {
   Text,
+  Image,
+  Platform,
   Clipboard,
   StyleSheet,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
