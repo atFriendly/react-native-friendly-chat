@@ -38,7 +38,7 @@
     "react-native-lightbox": "0.6.0",
     "react-native-parsed-text": "^0.0.18",
     "react-native-progress": "^3.2.1",
-    "shallowequal": "^1.0.1",
+    "shallowequal": "^0.2.2",
     "uuid": "3.0.1"
   }
 }
