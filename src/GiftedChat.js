@@ -243,7 +243,7 @@ class GiftedChat extends React.Component {
     if (this.props.isAnimated === true) {
       Animated.timing(this.state.messagesContainerHeight, {
         toValue: newMessagesContainerHeight,
-        duration: 210,
+        duration: 100,
       }).start();
     } else {
       this.setState({
@@ -260,7 +260,7 @@ class GiftedChat extends React.Component {
     if (this.props.isAnimated === true) {
       Animated.timing(this.state.messagesContainerHeight, {
         toValue: newMessagesContainerHeight,
-        duration: 210,
+        duration: 100,
       }).start();
     } else {
       this.setState({
@@ -312,6 +312,11 @@ class GiftedChat extends React.Component {
   }
 
   onSend(messages = [], shouldResetInputToolbar = false) {
+    if (shouldResetInputToolbar === true) {
+      this.setIsTypingDisabled(true);
+      this.resetInputToolbar();
+    }
+
     if (!Array.isArray(messages)) {
       messages = [messages];
     }
@@ -324,11 +329,6 @@ class GiftedChat extends React.Component {
         _id: this.props.messageIdGenerator(),
       };
     });
-
-    if (shouldResetInputToolbar === true) {
-      this.setIsTypingDisabled(true);
-      this.resetInputToolbar();
-    }
 
     this.props.onSend(messages);
     this.scrollToBottom();
