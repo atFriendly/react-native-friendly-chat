@@ -338,7 +338,7 @@ class GiftedChat extends React.Component {
         if (this.getIsMounted() === true) {
           this.setIsTypingDisabled(false);
         }
-      }, 100);
+      }, 10);
     }
   }
 
