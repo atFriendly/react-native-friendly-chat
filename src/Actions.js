@@ -42,7 +42,7 @@ export default class Actions extends React.Component {
       <View
         style={[styles.wrapper, this.props.wrapperStyle]}
       >
-        <Text
+        <Text allowFontScaling={false}
           style={[styles.iconText, this.props.iconTextStyle]}
         >
           +

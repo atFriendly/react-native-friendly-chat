@@ -28,7 +28,7 @@ export default class Send extends React.Component {
           }}
           accessibilityTraits="button"
         >
-          <Text style={[styles.text, this.props.textStyle]}>{I18n.get('Send')}</Text>
+          <Text allowFontScaling={false} style={[styles.text, this.props.textStyle]}>{I18n.get('Send')}</Text>
         </TouchableOpacity>
       );
     // }

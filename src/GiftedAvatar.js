@@ -70,7 +70,7 @@ export default class GiftedAvatar extends React.Component {
 
   renderInitials() {
     return (
-      <Text style={[defaultStyles.textStyle, this.props.textStyle]}>
+      <Text allowFontScaling={false} style={[defaultStyles.textStyle, this.props.textStyle]}>
         {this.avatarName}
       </Text>
     );

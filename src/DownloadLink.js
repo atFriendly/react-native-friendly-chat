@@ -18,7 +18,7 @@ export default class DownloadLink extends React.Component {
 		return (
 			<View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
 				<Hyperlink linkText={I18n.get('Download')} linkStyle={styles[this.props.position].fileLinkStyle} onPress={url => Linking.openURL(url)}>
-					<Text style={styles[this.props.position].fileLinkStyle}>
+					<Text allowFontScaling={false} style={styles[this.props.position].fileLinkStyle}>
 						{this.props.currentMessage.filePath}
 					</Text>
 				</Hyperlink>

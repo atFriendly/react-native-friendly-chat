@@ -18,7 +18,7 @@ export default class MessageProgress extends React.Component {
 		return (
 			<View style={[styles.container]}>
 				<View style={{paddingBottom: 2}}>
-					<Text style={styles.msgText}>
+					<Text allowFontScaling={false} style={styles.msgText}>
 						{this.props.currentMessage.text}
 					</Text>
 				</View>
@@ -27,7 +27,7 @@ export default class MessageProgress extends React.Component {
 						<ProgressBar progress={floatProgress} height={6}/>
 					</View>
 					<View>
-						<Text style={styles.percentText}>
+						<Text allowFontScaling={false} style={styles.percentText}>
 							{this.props.currentMessage.progress + "%"}
 						</Text>
 					</View>
