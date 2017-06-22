@@ -24,11 +24,15 @@ export default class I18nUtil {
 	 * @param {string} loc locale
 	 */
 	static setLocale(loc) {
+		if (!loc) {
+			locale = 'en';
+			return;
+		}
 		if (loc.toLowerCase().startsWith('zh-hans'))
 			locale = 'zh-cn';
 		else if (loc.toLowerCase().startsWith('zh-hant'))
 			locale = 'zh-tw';
 		else
-			locale = loc;
+			locale = loc.toLowerCase();
 	}
 }
