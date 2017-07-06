@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import I18n from './I18nUtil';
@@ -17,7 +18,7 @@ export default class Send extends React.Component {
   render() {
     // if (this.props.text.trim().length > 0) {
       return (
-        <TouchableOpacity
+        <TouchableWithoutFeedback
           style={[styles.container, this.props.containerStyle]}
           onPress={() => {
 			if (this.props.text.trim().length > 0) {
@@ -28,8 +29,12 @@ export default class Send extends React.Component {
           }}
           accessibilityTraits="button"
         >
-          <Text allowFontScaling={false} style={[styles.text, this.props.textStyle]}>{I18n.get('Send')}</Text>
-        </TouchableOpacity>
+			<View>
+				<Text allowFontScaling={false} style={[styles.text, this.props.textStyle]}>
+		  			{I18n.get('Send')}
+				</Text>
+			</View>
+        </TouchableWithoutFeedback>
       );
     // }
     // return <View/>;

@@ -313,7 +313,8 @@ class GiftedChat extends React.Component {
 
   onSend(messages = [], shouldResetInputToolbar = false) {
     if (shouldResetInputToolbar === true) {
-      this.setIsTypingDisabled(true);
+    //   this.setIsTypingDisabled(true);
+		this.setIsTypingDisabled(false);
       this.resetInputToolbar();
     }
 
