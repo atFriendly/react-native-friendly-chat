@@ -1,0 +1,44 @@
+{
+  "name": "react-native-friendly-chat",
+  "version": "0.0.45",
+  "description": "The most complete chat UI for React Native",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atFriendly/react-native-friendly-chat.git"
+  },
+  "keywords": [],
+  "author": "atFriendly",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/atFriendly/react-native-friendly-chat/issues"
+  },
+  "homepage": "https://github.com/atFriendly/react-native-friendly-chat#readme",
+  "scripts": {
+    "lint": "eslint . --ext .js,.jsx"
+  },
+  "devDependencies": {
+    "eslint": "~3.12.2",
+    "eslint-config-airbnb": "~13.0.0",
+    "eslint-config-cooperka": "~0.2.3",
+    "eslint-plugin-import": "~2.2.0",
+    "eslint-plugin-jsx-a11y": "~2.2.3",
+    "eslint-plugin-react": "~6.8.0",
+    "eslint-plugin-react-native": "~2.2.1"
+  },
+  "dependencies": {
+    "@expo/react-native-action-sheet": "0.3.1",
+    "md5": "^2.2.1",
+    "moment": "^2.18.1",
+    "react-native-communications": "^2.2.1",
+    "react-native-dismiss-keyboard": "^1.0.0",
+    "react-native-hyperlink": "0.0.9",
+    "react-native-i18n": "^1.0.0",
+    "react-native-invertible-scroll-view": "^1.0.0",
+    "react-native-lightbox": "0.6.0",
+    "react-native-parsed-text": "^0.0.18",
+    "react-native-progress": "^3.2.1",
+    "shallowequal": "^0.2.2",
+    "uuid": "3.0.1"
+  }
+}
