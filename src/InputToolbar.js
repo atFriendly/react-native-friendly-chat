@@ -37,16 +37,16 @@ export default class InputToolbar extends React.Component {
     );
   }
 
-  renderAccessory() {
-    if (this.props.renderAccessory) {
-      return (
-        <View style={[styles.accessory, this.props.accessoryStyle]}>
-          {this.props.renderAccessory(this.props)}
-        </View>
-      );
-    }
-    return null;
-  }
+//   renderAccessory() {
+//     if (this.props.renderAccessory) {
+//       return (
+//         <View style={[styles.accessory, this.props.accessoryStyle]}>
+//           {this.props.renderAccessory(this.props)}
+//         </View>
+//       );
+//     }
+//     return null;
+//   }
 
   render() {
     return (
@@ -56,7 +56,7 @@ export default class InputToolbar extends React.Component {
           {this.renderComposer()}
           {this.renderSend()}
         </View>
-        {this.renderAccessory()}
+        {/*this.renderAccessory()*/}
       </View>
     );
   }

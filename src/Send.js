@@ -22,9 +22,11 @@ export default class Send extends React.Component {
           style={[styles.container, this.props.containerStyle]}
           onPress={() => {
 			if (this.props.text.trim().length > 0) {
-				setTimeout(() => {
-					this.props.onSend({text: this.props.text.trim()}, true);
-				}, 0);
+				requestAnimationFrame(() => {
+					setTimeout(() => {
+						this.props.onSend({text: this.props.text.trim()}, true);
+					}, 0);
+				});
 			}
           }}
           accessibilityTraits="button"
