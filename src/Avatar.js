@@ -23,9 +23,10 @@ export default class Avatar extends React.Component {
     const messageToCompare = renderAvatarOnTop ? this.props.previousMessage : this.props.nextMessage;
     const computedStyle = renderAvatarOnTop ? "onTop" : "onBottom"
 
-    if (this.props.renderAvatar === null) {
-      return null
-    }
+	//本來就沒作客製化的render，加上這段後會因為沒有自訂avatar而完全不顯示人名，故移除
+    // if (this.props.renderAvatar === null) {
+    //   return null
+    // }
 
     if (isSameUser(this.props.currentMessage, messageToCompare) && isSameDay(this.props.currentMessage, messageToCompare)) {
       return (
