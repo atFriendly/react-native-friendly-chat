@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -6,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ViewPropTypes,
 } from 'react-native';
 import I18n from './I18nUtil';
 
@@ -92,11 +94,11 @@ LoadEarlier.defaultProps = {
 };
 
 LoadEarlier.propTypes = {
-  onLoadEarlier: React.PropTypes.func,
-  isLoadingEarlier: React.PropTypes.bool,
-  label: React.PropTypes.string,
-  containerStyle: View.propTypes.style,
-  wrapperStyle: View.propTypes.style,
+  onLoadEarlier: PropTypes.func,
+  isLoadingEarlier: PropTypes.bool,
+  label: PropTypes.string,
+  containerStyle: ViewPropTypes.style,
+  wrapperStyle: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
-  activityIndicatorStyle: View.propTypes.style,
+  activityIndicatorStyle: ViewPropTypes.style,
 };

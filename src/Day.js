@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   StyleSheet,
   Text,
   View,
+  ViewPropTypes,
 } from 'react-native';
 
 import moment from 'moment/min/moment-with-locales.min';
@@ -11,6 +13,8 @@ import { isSameDay, isSameUser, warnDeprecated } from './utils';
 
 export default class Day extends React.Component {
   render() {
+    const { dateFormat } = this.props;
+
     if (!isSameDay(this.props.currentMessage, this.props.previousMessage)) {
       return (
         <View style={[styles.container, this.props.containerStyle]}>
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
 });
 
 Day.contextTypes = {
-  getLocale: React.PropTypes.func,
+  getLocale: PropTypes.func,
 };
 
 Day.defaultProps = {
@@ -68,12 +72,13 @@ Day.defaultProps = {
 };
 
 Day.propTypes = {
-  currentMessage: React.PropTypes.object,
-  previousMessage: React.PropTypes.object,
-  containerStyle: View.propTypes.style,
-  wrapperStyle: View.propTypes.style,
+  currentMessage: PropTypes.object,
+  previousMessage: PropTypes.object,
+  containerStyle: ViewPropTypes.style,
+  wrapperStyle: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
   //TODO: remove in next major release
-  isSameDay: React.PropTypes.func,
-  isSameUser: React.PropTypes.func,
+  isSameDay: PropTypes.func,
+  isSameUser: PropTypes.func,
+  dateFormat: PropTypes.string,
 };

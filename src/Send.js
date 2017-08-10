@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   StyleSheet,
@@ -5,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  ViewPropTypes,
 } from 'react-native';
 import I18n from './I18nUtil';
 
@@ -75,9 +77,9 @@ Send.defaultProps = {
 };
 
 Send.propTypes = {
-  text: React.PropTypes.string,
-  onSend: React.PropTypes.func,
-  label: React.PropTypes.string,
-  containerStyle: View.propTypes.style,
+  text: PropTypes.string,
+  onSend: PropTypes.func,
+  label: PropTypes.string,
+  containerStyle: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
 };
