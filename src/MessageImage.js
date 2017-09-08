@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   ViewPropTypes,
+  Dimensions
 } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 import GiftedChatInteractionManager from './GiftedChatInteractionManager';
