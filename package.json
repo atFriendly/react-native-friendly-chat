@@ -1,6 +1,6 @@
 {
   "name": "react-native-friendly-chat",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "The most complete chat UI for React Native",
   "main": "index.js",
   "repository": {
@@ -34,8 +34,8 @@
     "react-native-communications": "^2.2.1",
     "react-native-dismiss-keyboard": "^1.0.0",
     "react-native-hyperlink": "0.0.9",
-	"react-native-i18n": "^1.0.0",
-	"react-native-photo-view": "1.5.2",
+    "react-native-i18n": "^1.0.0",
+    "react-native-photo-view": "1.5.2",
     "react-native-invertible-scroll-view": "^1.0.0",
     "react-native-lightbox": "oblador/react-native-lightbox#c84a8543d4511fe6a44c3d7820747c9c1bddd875",
     "react-native-parsed-text": "^0.0.18",
