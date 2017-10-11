@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Modal,
+  Text
 } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 import PhotoView from 'react-native-photo-view';
