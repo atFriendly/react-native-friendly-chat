@@ -136,7 +136,7 @@ export default class MessageImage extends React.Component {
 				<Modal visible={this.state.openModal} transparent={true} animationType='none'>
 					<View style={{flex:1, width, height, alignItems:'center', justifyContent:'center', backgroundColor:'#000'}}>
 						<PhotoView 
-							source={{uri: 'http://1.bp.blogspot.com/_7ErfTFmlXs8/S7LVbJN0EHI/AAAAAAAAAXg/9NpEDjUxMws/s1600/%E7%86%8A%E5%90%89.JPG'}}
+							source={{uri: this.state.uri}}
 							minimumZoomScale={1}
 							maximumZoomScale={4}
 							androidScaleType="center"
