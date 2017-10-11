@@ -5,10 +5,14 @@ import {
   StyleSheet,
   View,
   ViewPropTypes,
-  Dimensions
+  Dimensions,
+  TouchableWithoutFeedback,
+  Modal,
 } from 'react-native';
 import Lightbox from 'react-native-lightbox';
+import PhotoView from 'react-native-photo-view';
 import GiftedChatInteractionManager from './GiftedChatInteractionManager';
+import I18n from './I18nUtil';
 
 export default class MessageImage extends React.Component {
 
@@ -115,7 +119,7 @@ export default class MessageImage extends React.Component {
 
 		return (
 			<View style={[styles.container, this.props.containerStyle]}>
-				<Lightbox
+				{/* <Lightbox
 					activeProps={{
 						style: [styles.imageActive, { width, height }],
 					}}
@@ -125,7 +129,29 @@ export default class MessageImage extends React.Component {
 					onOpen={() => { this.onOpen() }}
 				>
 					{this.renderImage()}
-				</Lightbox>
+				</Lightbox> */}
+				<TouchableWithoutFeedback onPress={() => {this.onOpen()}}>
+					{this.renderImage()}
+				</TouchableWithoutFeedback>
+				<Modal visible={this.state.openModal} transparent={true} animationType='none'>
+					<View style={{flex:1, width, height, alignItems:'center', justifyContent:'center', backgroundColor:'#000'}}>
+						<PhotoView 
+							source={{uri: 'http://1.bp.blogspot.com/_7ErfTFmlXs8/S7LVbJN0EHI/AAAAAAAAAXg/9NpEDjUxMws/s1600/%E7%86%8A%E5%90%89.JPG'}}
+							minimumZoomScale={1}
+							maximumZoomScale={4}
+							androidScaleType="center"
+							style={{width, height}}/>
+						<View style={{position:'absolute', backgroundColor:'transparent', right:20, top:20}}>
+							<TouchableWithoutFeedback onPress={() => {this.onClose()}}>
+								<View style={styles.closeButton}>
+									<Text style={{fontSize:16, color:'#CCC'}}>
+										{I18n.get('Close')}
+									</Text>
+								</View>
+							</TouchableWithoutFeedback>
+						</View>
+					</View>
+				</Modal>
 			</View>
 		);
 	}
@@ -152,6 +178,13 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'contain',
   },
+  closeButton: {
+	padding: 5, 
+	borderStyle: 'solid', 
+	borderWidth: StyleSheet.hairlineWidth, 
+	borderColor: '#CCC',
+	borderRadius: 6,
+  }
 });
 
 MessageImage.defaultProps = {
