@@ -28,10 +28,14 @@ export default class MessageText extends React.Component {
     // react-native-parsed-text recognizes it as a valid url, but Linking fails to open due to the missing scheme.
     if (WWW_URL_PATTERN.test(url)) {
       this.onUrlPress(`http://${url}`);
-    } else if (Linking.canOpenURL(url)) {
-      Linking.openURL(url);
     } else {
-      console.error('No handler for URL:', url);
+      Linking.canOpenURL(url).then((supported) => {
+        if (!supported) {
+          console.error('No handler for URL:', url);
+        } else {
+          Linking.openURL(url);
+        }
+      });
     }
   }
 
@@ -59,18 +63,20 @@ export default class MessageText extends React.Component {
   }
 
   onEmailPress(email) {
-    Communications.email(email, null, null, null, null);
+    Communications.email([email], null, null, null, null);
   }
 
   render() {
+    const linkStyle = StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]);
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <ParsedText
           style={[styles[this.props.position].text, this.props.textStyle[this.props.position]]}
           parse={[
-            {type: 'url', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onUrlPress},
-            {type: 'phone', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onPhonePress},
-            {type: 'email', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onEmailPress},
+            ...this.props.parsePatterns(linkStyle),
+            {type: 'url', style: linkStyle, onPress: this.onUrlPress},
+            {type: 'phone', style: linkStyle, onPress: this.onPhonePress},
+            {type: 'email', style: linkStyle, onPress: this.onEmailPress},
           ]}
         >
           {this.props.currentMessage.text}
@@ -128,6 +134,7 @@ MessageText.defaultProps = {
   containerStyle: {},
   textStyle: {},
   linkStyle: {},
+  parsePatterns: () => [],
 };
 
 MessageText.propTypes = {
@@ -145,4 +152,5 @@ MessageText.propTypes = {
     left: Text.propTypes.style,
     right: Text.propTypes.style,
   }),
+  parsePatterns: PropTypes.func,
 };
