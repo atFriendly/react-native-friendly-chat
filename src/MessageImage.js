@@ -23,6 +23,7 @@ export default class MessageImage extends React.Component {
 			uri: this.props.currentMessage.image,
 			switchToDefaultImg: false,
 			retryTime: 0,
+			openModal: false,
 		}
 	}
 
@@ -70,6 +71,7 @@ export default class MessageImage extends React.Component {
 					uri: this.getFullSizeImageUri(),
 					retryTime: 0,
 					switchToDefaultImg: false,
+					openModal: true,
 				});
 			}, 100);
 		// });
@@ -80,6 +82,7 @@ export default class MessageImage extends React.Component {
 			setTimeout(() => {
 				this.setState({
 					uri: this.getThumbImageUri(),
+					openModal: false,
 				});
 			}, 100);
 		// });
@@ -117,7 +120,7 @@ export default class MessageImage extends React.Component {
 
 	render() {
 		const { width, height } = Dimensions.get('window');
-
+		const noImg = this.state.switchToDefaultImg;
 		return (
 			<View style={[styles.container, this.props.containerStyle]}>
 				{/* <Lightbox
@@ -135,12 +138,13 @@ export default class MessageImage extends React.Component {
 					{this.renderImage()}
 				</TouchableWithoutFeedback>
 				<Modal visible={this.state.openModal} transparent={true} animationType='none'>
-					<View style={{flex:1, width, height, alignItems:'center', justifyContent:'center', backgroundColor:'#000'}}>
+					<View style={[styles.glass, {width, height,}]}>
 						<PhotoView 
-							source={{uri: this.state.uri}}
-							minimumZoomScale={1}
+							source={noImg === true ? require('./images/missing_image.png') : {uri: this.state.uri}}
+							minimumZoomScale={0.5}
 							maximumZoomScale={4}
 							androidScaleType="center"
+							onViewTap={() => {this.onClose()}}
 							style={{width, height}}/>
 						<View style={{position:'absolute', backgroundColor:'transparent', right:20, top:20}}>
 							<TouchableWithoutFeedback onPress={() => {this.onClose()}}>
@@ -185,6 +189,13 @@ const styles = StyleSheet.create({
 	borderWidth: StyleSheet.hairlineWidth, 
 	borderColor: '#CCC',
 	borderRadius: 6,
+  },
+  glass: {
+	flex: 1, 
+	alignItems: 'center', 
+	justifyContent: 'center', 
+	backgroundColor: '#000', 
+	opacity: 0.9,
   }
 });
 
