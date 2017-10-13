@@ -19,12 +19,21 @@ export default class MessageImage extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this._isMounted = false;
 		this.state = {
 			uri: this.props.currentMessage.image,
 			switchToDefaultImg: false,
 			retryTime: 0,
 			openModal: false,
 		}
+	}
+
+	componentWillMount() {
+		this._isMounted = true;
+	}
+
+	componentWillUnmount() {
+		this._isMounted = false;
 	}
 
 	onLoad() {
@@ -45,6 +54,8 @@ export default class MessageImage extends React.Component {
 		if (this.state.retryTime >= 3) {
 			// GiftedChatInteractionManager.runAfterInteractions(() => {
 				this.errTimer = setTimeout(() => {
+					if (this._isMounted === false)
+						return;
 					this.setState({
 						switchToDefaultImg: true
 					});
@@ -55,6 +66,8 @@ export default class MessageImage extends React.Component {
 			// GiftedChatInteractionManager.runAfterInteractions(() => {
 				this.errTimer = setTimeout(() => {
 					const newRetryTime = this.state.retryTime + 1;
+					if (this._isMounted === false)
+						return;
 					this.setState({
 						retryTime: newRetryTime,
 						uri: this.getFullSizeImageUri() + '&retryTime=' + newRetryTime, 
