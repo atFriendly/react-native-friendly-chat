@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
 	alignItems: 'center', 
 	justifyContent: 'center', 
 	backgroundColor: '#000', 
-	opacity: 0.9,
+	opacity: 1,
   }
 });
 
