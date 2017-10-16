@@ -151,10 +151,10 @@ export default class MessageImage extends React.Component {
 					{this.renderImage()}
 				</TouchableWithoutFeedback>
 				<Modal visible={this.state.openModal} transparent={true} animationType='none'>
-					<View style={[styles.glass, {width, height,}]}>
+					<View style={[styles.glass]}>
 						<PhotoView 
 							source={noImg === true ? require('./images/missing_image.png') : {uri: this.state.uri}}
-							minimumZoomScale={0.5}
+							minimumZoomScale={1}
 							maximumZoomScale={4}
 							androidScaleType="center"
 							onViewTap={() => {this.onClose()}}
