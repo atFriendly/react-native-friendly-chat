@@ -8,6 +8,7 @@ import {
 
 import Avatar from './Avatar';
 import Bubble from './Bubble';
+import SystemMessage from './SystemMessage';
 import Day from './Day';
 import Tag from './Tag';
 
@@ -52,6 +53,14 @@ export default class Message extends React.Component {
     return <Bubble {...bubbleProps}/>;
   }
 
+  renderSystemMessage() {
+    const systemMessageProps = this.getInnerComponentProps();
+    if (this.props.renderSystemMessage) {
+      return this.props.renderSystemMessage(systemMessageProps);
+    }
+    return <SystemMessage {...systemMessageProps} />;
+  }
+
   renderAvatar() {
 	//dont show avatar at single chat
 	if (!this.props.currentMessage.groupMessage)
@@ -68,6 +77,7 @@ export default class Message extends React.Component {
   }
 
   render() {
+<<<<<<< HEAD
 	  if (this.props.currentMessage.isTag) {
 		  return this.renderTag();
 	  }
@@ -83,6 +93,20 @@ export default class Message extends React.Component {
 			  </View>
 		  </View>
 	  );
+=======
+    return (
+      <View>
+        {this.renderDay()}
+        {this.props.currentMessage.system ? 
+          this.renderSystemMessage() :
+          <View style={[styles[this.props.position].container, { marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10 }, this.props.containerStyle[this.props.position]]}>
+            {this.props.position === "left" ? this.renderAvatar() : null}
+            {this.renderBubble()}
+            {this.props.position === "right" ? this.renderAvatar() : null}
+          </View>}
+      </View>
+    );
+>>>>>>> FaridSafi/master
   }
 }
 
@@ -111,6 +135,7 @@ Message.defaultProps = {
   renderAvatar: undefined,
   renderBubble: null,
   renderDay: null,
+  renderSystemMessage: null,
   position: 'left',
   currentMessage: {},
   nextMessage: {},
@@ -124,6 +149,7 @@ Message.propTypes = {
   showUserAvatar: PropTypes.bool,
   renderBubble: PropTypes.func,
   renderDay: PropTypes.func,
+  renderSystemMessage: PropTypes.func,
   position: PropTypes.oneOf(['left', 'right']),
   currentMessage: PropTypes.object,
   nextMessage: PropTypes.object,
