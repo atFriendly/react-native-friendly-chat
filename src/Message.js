@@ -77,7 +77,6 @@ export default class Message extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
 	  if (this.props.currentMessage.isTag) {
 		  return this.renderTag();
 	  }
@@ -93,20 +92,6 @@ export default class Message extends React.Component {
 			  </View>
 		  </View>
 	  );
-=======
-    return (
-      <View>
-        {this.renderDay()}
-        {this.props.currentMessage.system ? 
-          this.renderSystemMessage() :
-          <View style={[styles[this.props.position].container, { marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10 }, this.props.containerStyle[this.props.position]]}>
-            {this.props.position === "left" ? this.renderAvatar() : null}
-            {this.renderBubble()}
-            {this.props.position === "right" ? this.renderAvatar() : null}
-          </View>}
-      </View>
-    );
->>>>>>> FaridSafi/master
   }
 }
 

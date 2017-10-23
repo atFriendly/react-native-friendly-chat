@@ -41,13 +41,8 @@ export default class Composer extends React.Component {
         autoFocus={this.props.textInputAutoFocus}
 
         value={this.props.text}
-<<<<<<< HEAD
-        accessibilityLabel={this.props.text || I18n.get('MessagePlaceholder')} //this.props.placeholder
+        accessibilityLabel={this.props.text || this.props.placeholder || I18n.get('MessagePlaceholder')}
         enablesReturnKeyAutomatically={true}
-=======
-        accessibilityLabel={this.props.text || this.props.placeholder}
-        enablesReturnKeyAutomatically
->>>>>>> FaridSafi/master
         underlineColorAndroid="transparent"
         {...this.props.textInputProps}
       />
@@ -82,14 +77,10 @@ Composer.defaultProps = {
   placeholderTextColor: '#b2b2b2',
   textInputProps: null,
   multiline: true,
-<<<<<<< HEAD
   textInputStyle: {
 	  color: '#888'
   },
-=======
-  textInputStyle: {},
   textInputAutoFocus: false,
->>>>>>> FaridSafi/master
   onTextChanged: () => {
   },
   onInputSizeChanged: () => {
