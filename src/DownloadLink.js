@@ -5,7 +5,7 @@ import {
 	Text,
 	View,
 } from 'react-native';
-
+import PropTypes from 'prop-types';
 import Hyperlink from 'react-native-hyperlink';
 import I18n from './I18nUtil';
 
@@ -55,7 +55,7 @@ const styles = {
 };
 
 DownloadLink.contextTypes = {
-	actionSheet: React.PropTypes.func,
+	actionSheet: PropTypes.func,
 };
 
 DownloadLink.defaultProps = {
@@ -67,9 +67,9 @@ DownloadLink.defaultProps = {
 };
 
 DownloadLink.propTypes = {
-	position: React.PropTypes.oneOf(['left', 'right']),
-	currentMessage: React.PropTypes.object,
-	containerStyle: React.PropTypes.shape({
+	position: PropTypes.oneOf(['left', 'right']),
+	currentMessage: PropTypes.object,
+	containerStyle: PropTypes.shape({
 		left: View.propTypes.style,
 		right: View.propTypes.style,
 	}),

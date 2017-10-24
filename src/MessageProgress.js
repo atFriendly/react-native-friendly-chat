@@ -4,6 +4,7 @@ import {
 	Text,
 	View,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import ProgressBar from 'react-native-progress/Bar';
 
 export default class MessageProgress extends React.Component {
@@ -64,5 +65,5 @@ MessageProgress.defaultProps = {
 };
 
 MessageProgress.propTypes = {
-	currentMessage: React.PropTypes.object,
+	currentMessage: PropTypes.object,
 };

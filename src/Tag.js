@@ -4,7 +4,7 @@ import {
 	Text,
 	View,
 } from 'react-native';
-
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 export default class Tag extends React.Component {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 });
 
 Tag.contextTypes = {
-	getLocale: React.PropTypes.func,
+	getLocale: PropTypes.func,
 };
 
 Tag.defaultProps = {
@@ -69,7 +69,7 @@ Tag.defaultProps = {
 };
 
 Tag.propTypes = {
-	currentMessage: React.PropTypes.object,
+	currentMessage: PropTypes.object,
 	containerStyle: View.propTypes.style,
 	wrapperStyle: View.propTypes.style,
 	textStyle: Text.propTypes.style,
