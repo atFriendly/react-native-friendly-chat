@@ -3,6 +3,7 @@ import {
 	StyleSheet,
 	Text,
 	View,
+	ViewPropTypes,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -70,7 +71,7 @@ Tag.defaultProps = {
 
 Tag.propTypes = {
 	currentMessage: PropTypes.object,
-	containerStyle: View.propTypes.style,
-	wrapperStyle: View.propTypes.style,
+	containerStyle: ViewPropTypes.style,
+	wrapperStyle: ViewPropTypes.style,
 	textStyle: Text.propTypes.style,
 };
