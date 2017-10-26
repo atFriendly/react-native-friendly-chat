@@ -1,6 +1,6 @@
-import I18n from 'react-native-i18n';
+import { getLanguages } from 'react-native-i18n';
 const data = require('./data/i18n_data.js');
-let locale = I18n.locale.toLowerCase();
+let locale = 'zh-cn';
 
 export default class I18nUtil {
 	static get(key) {
