@@ -53,10 +53,10 @@ export default class MessageText extends React.Component {
     (buttonIndex) => {
       switch (buttonIndex) {
         case 0:
-          Communications.phonecall(phone, true);
-          break;
+			Communications.text(phone);
+		break;
         case 1:
-          Communications.text(phone);
+			Communications.phonecall(phone, true);
           break;
       }
     });
