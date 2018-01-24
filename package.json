@@ -18,29 +18,29 @@
     "lint": "eslint . --ext .js,.jsx"
   },
   "devDependencies": {
-    "eslint": "3.19.0",
-    "eslint-config-airbnb": "15.0.2",
-    "eslint-config-cooperka": "0.2.3",
-    "eslint-plugin-import": "2.6.1",
-    "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.1.0",
-    "eslint-plugin-react-native": "2.3.2"
+    "eslint": "4.16.0",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-config-cooperka": "0.2.9",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "7.5.1",
+    "eslint-plugin-react-native": "3.2.1"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.1",
     "md5": "^2.2.1",
-    "moment": "^2.19.1",
+    "moment": "^2.20.1",
     "prop-types": "15.6.0",
     "react-native-communications": "^2.2.1",
     "react-native-dismiss-keyboard": "^1.0.0",
-    "react-native-hyperlink": "0.0.11",
-    "react-native-i18n": "^2.0.8",
+    "react-native-hyperlink": "0.0.12",
+    "react-native-i18n": "^2.0.10",
     "react-native-photo-view": "1.5.2",
     "react-native-invertible-scroll-view": "^1.1.0",
     "react-native-lightbox": "^0.7.0",
     "react-native-parsed-text": "^0.0.20",
     "react-native-progress": "^3.4.0",
     "shallowequal": "1.0.2",
-    "uuid": "3.0.1"
+    "uuid": "3.2.1"
   }
 }
