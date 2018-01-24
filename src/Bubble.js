@@ -71,7 +71,7 @@ export default class Bubble extends React.Component {
 	renderDocView() {
 		if (this.props.renderDocView) {
 			return (
-				<View style={{ padding: 5, paddingTop: 7 }}>
+				<View style={{ paddingTop: 2, paddingRight: 5 }}>
 					{this.props.renderDocView(this.props)}
 				</View>
 			);
@@ -83,7 +83,7 @@ export default class Bubble extends React.Component {
 		if (this.props.currentMessage.filePath) {
 			const { containerStyle, wrapperStyle, ...messageProps } = this.props;
 			return (
-				<View style={{ padding: 5, paddingLeft: 10, paddingRight: 2 }}>
+				<View style={{ paddingLeft: 10 }}>
 					<DownloadLink {...messageProps} />
 				</View>
 			);
@@ -204,7 +204,7 @@ export default class Bubble extends React.Component {
 							{this.renderCustomView()}
 							{this.renderMessageImage()}
 							{this.renderMessageText()}
-							<View style={{ flexDirection: 'row' }}>
+							<View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 5 }}>
 								{this.renderDocView()}
 								{this.renderDownloadLink()}
 							</View>
