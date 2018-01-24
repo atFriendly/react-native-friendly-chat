@@ -69,8 +69,12 @@ export default class Bubble extends React.Component {
 	}
 
 	renderDocView() {
-		if (this.props.renderCustomView) {
-			return this.props.renderCustomView(this.props);
+		if (this.props.renderDocView) {
+			return (
+				<View style={{ padding: 5, paddingTop: 7 }}>
+					{this.props.renderDocView(this.props)}
+				</View>
+			);
 		}
 		return null;
 	}
@@ -78,7 +82,12 @@ export default class Bubble extends React.Component {
 	renderDownloadLink() {
 		if (this.props.currentMessage.filePath) {
 			const { containerStyle, wrapperStyle, ...messageProps } = this.props;
-			return <DownloadLink {...messageProps} />;
+			return (
+				<View style={{ padding: 5, paddingLeft: 10, paddingRight: 2 }}>
+					<DownloadLink {...messageProps} />
+				</View>
+			);
+			// return <DownloadLink {...messageProps} />;
 		}
 		return null;
 	}
