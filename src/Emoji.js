@@ -2,44 +2,21 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {
 	StyleSheet,
+	Text,
+	TouchableOpacity,
 	View,
 	ViewPropTypes,
+	Modal,
 } from 'react-native';
 import Emoticons from 'react-native-emoticons';
 
 export default class Emoji extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			visible: false,
+		}
 	}
-
-	// renderIcon() {
-	// 	if (this.props.icon) {
-	// 		return this.props.icon();
-	// 	}
-	// 	return (
-	// 		<View
-	// 			style={[styles.wrapper, this.props.wrapperStyle]}
-	// 		>
-	// 			<Text allowFontScaling={false}
-	// 				style={[styles.iconText, this.props.iconTextStyle]}
-	// 			>
-	// 				+
-    //     </Text>
-	// 		</View>
-	// 	);
-	// }
-
-	// render() {
-	// 	return (
-	// 		<TouchableOpacity
-	// 			style={[styles.container, this.props.containerStyle]}
-	// 			onPress={this.onPress}
-	// 		>
-	// 			{this.renderIcon()}
-
-	// 		</TouchableOpacity>
-	// 	);
-	// }
 
 	onEmoticonPress = () => {
 
@@ -49,27 +26,45 @@ export default class Emoji extends React.Component {
 
 	}
 
+	onEmojiIconPress = () => {
+		this.setState({
+			visible: !this.state.visible
+		});
+	}
+
 	render() {
 		return (
-			<View style={styles.container}>
-			<Emoticons
-				onEmoticonPress={this.onEmoticonPress.bind(this)}
-				onBackspacePress={this.onBackspacePress.bind(this)}
-				concise={this.props.concise}
-				showHistoryBar={this.props.showHistoryBar}
-			/>
+			<View>
+				<TouchableOpacity style={styles.container} onPress={this.onEmojiIconPress.bind(this)}>
+					<Text>{String.fromCodePoint(128512)}</Text>
+				</TouchableOpacity>
+				<Modal
+					animationType={"slide"}
+					transparent={false}
+					visible={this.state.visible}
+				>
+					<Emoticons
+						onEmoticonPress={this.onEmoticonPress.bind(this)}
+						onBackspacePress={this.onBackspacePress.bind(this)}
+						concise={this.props.concise}
+						showPlusBar={this.props.showPlusBar}
+						showHistoryBar={this.props.showHistoryBar}
+					/>
+				</Modal>
 			</View>
 		);
 	}
 }
 
 Emoji.defaultProps = {
-	concise: false,
+	concise: true,
+	showPlusBar: false,
 	showHistoryBar: false,
 };
 
 Emoji.propTypes = {
 	concise: PropTypes.bool,
+	showPlusBar: PropTypes.bool,
 	showHistoryBar: PropTypes.bool,
 };
 
