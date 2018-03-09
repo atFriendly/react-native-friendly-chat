@@ -4,6 +4,7 @@ import {
 	StyleSheet,
 	View,
 	ViewPropTypes,
+	TouchableOpacity,
 } from 'react-native';
 
 import Composer from './Composer';
@@ -22,7 +23,9 @@ export default class InputToolbar extends React.Component {
 	}
 
 	renderEmoji() {
-		return <Emoji {...this.props} />;
+		return (
+			<Emoji {...this.props} />
+		);
 	}
 
 	renderSend() {
@@ -83,6 +86,12 @@ const styles = StyleSheet.create({
 	accessory: {
 		height: 44,
 	},
+	emojiIcon : {
+		width: 26,
+		height: 26,
+		marginLeft: 10,
+		marginBottom: 10,
+	}
 });
 
 InputToolbar.defaultProps = {
@@ -93,6 +102,7 @@ InputToolbar.defaultProps = {
 	containerStyle: {},
 	primaryStyle: {},
 	accessoryStyle: {},
+	onPressEmojiIcon: () => {},
 };
 
 InputToolbar.propTypes = {
@@ -104,4 +114,5 @@ InputToolbar.propTypes = {
 	containerStyle: ViewPropTypes.style,
 	primaryStyle: ViewPropTypes.style,
 	accessoryStyle: ViewPropTypes.style,
+	onPressEmojiIcon: PropTypes.func,
 };

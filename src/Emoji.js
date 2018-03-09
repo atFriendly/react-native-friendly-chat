@@ -6,66 +6,29 @@ import {
 	TouchableOpacity,
 	View,
 	ViewPropTypes,
-	Modal,
+	Platform,
 } from 'react-native';
-import Emoticons from 'react-native-emoticons';
 
 export default class Emoji extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			visible: false,
-		}
-	}
-
-	onEmoticonPress = () => {
-
-	}
-
-	onBackspacePress = () => {
-
-	}
-
-	onEmojiIconPress = () => {
-		this.setState({
-			visible: !this.state.visible
-		});
-	}
-
 	render() {
 		return (
 			<View>
-				<TouchableOpacity style={styles.container} onPress={this.onEmojiIconPress.bind(this)}>
-					<Text>{String.fromCodePoint(128512)}</Text>
+				<TouchableOpacity style={styles.container} onPress={this.props.onPressEmojiIcon}>
+					<Text allowFontScaling={false} style={{fontSize:18}}>
+						{String.fromCodePoint(128512)}
+					</Text>
 				</TouchableOpacity>
-				<Modal
-					animationType={"slide"}
-					transparent={false}
-					visible={this.state.visible}
-				>
-					<Emoticons
-						onEmoticonPress={this.onEmoticonPress.bind(this)}
-						onBackspacePress={this.onBackspacePress.bind(this)}
-						concise={this.props.concise}
-						showPlusBar={this.props.showPlusBar}
-						showHistoryBar={this.props.showHistoryBar}
-					/>
-				</Modal>
 			</View>
 		);
 	}
 }
 
 Emoji.defaultProps = {
-	concise: true,
-	showPlusBar: false,
-	showHistoryBar: false,
+	onPressEmojiIcon: () => {},
 };
 
 Emoji.propTypes = {
-	concise: PropTypes.bool,
-	showPlusBar: PropTypes.bool,
-	showHistoryBar: PropTypes.bool,
+	onPressEmojiIcon: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
