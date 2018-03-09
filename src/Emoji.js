@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {
 	StyleSheet,
-	Text,
-	TouchableOpacity,
 	View,
 	ViewPropTypes,
 } from 'react-native';
@@ -53,12 +51,14 @@ export default class Emoji extends React.Component {
 
 	render() {
 		return (
+			<View style={styles.container}>
 			<Emoticons
 				onEmoticonPress={this.onEmoticonPress.bind(this)}
 				onBackspacePress={this.onBackspacePress.bind(this)}
 				concise={this.props.concise}
 				showHistoryBar={this.props.showHistoryBar}
 			/>
+			</View>
 		);
 	}
 }
@@ -74,4 +74,10 @@ Emoji.propTypes = {
 };
 
 const styles = StyleSheet.create({
+	container: {
+		width: 26,
+		height: 26,
+		marginLeft: 10,
+		marginBottom: 10,
+	},
 });
