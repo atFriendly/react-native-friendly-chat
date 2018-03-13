@@ -33,7 +33,7 @@ import Time from './Time';
 import GiftedAvatar from './GiftedAvatar';
 import I18nUtil from './I18nUtil';
 import GiftedChatInteractionManager from './GiftedChatInteractionManager';
-import Emoticons, * as emoticons from 'react-native-emoticons';
+import Emoticons, * as emoticons from 'react-native-friendly-emoticons';
 
 // Min and max heights of ToolbarInput and Composer
 // Needed for Composer auto grow and ScrollView animation
