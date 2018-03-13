@@ -24,6 +24,7 @@ import { isSameUser, isSameDay, warnDeprecated } from './utils';
 export default class Bubble extends React.Component {
 	constructor(props) {
 		super(props);
+		this.onPress = this.onPress.bind(this);
 		this.onLongPress = this.onLongPress.bind(this);
 	}
 
@@ -139,6 +140,12 @@ export default class Bubble extends React.Component {
 		return null;
 	}
 
+	onPress() {
+		if (this.props.onPress) {
+			this.props.onPress(this.context, this.props.currentMessage);
+		}
+	}
+
 	onLongPress() {
 		if (this.props.onLongPress) {
 			this.props.onLongPress(this.context, this.props.currentMessage);
@@ -195,7 +202,8 @@ export default class Bubble extends React.Component {
 			<View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
 				{this.renderResend()}
 				<View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious(), uploadStyle]}>
-					<TouchableWithoutFeedback
+					<TouchableOpacity
+						onPress={this.onPress}
 						onLongPress={this.onLongPress}
 						accessibilityTraits="text"
 						{...this.props.touchableProps}
@@ -214,7 +222,7 @@ export default class Bubble extends React.Component {
 								{this.renderTime()}
 							</View>
 						</View>
-					</TouchableWithoutFeedback>
+					</TouchableOpacity>
 				</View>
 			</View>
 		);

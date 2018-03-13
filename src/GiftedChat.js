@@ -5,6 +5,8 @@ import {
 	Platform,
 	StyleSheet,
 	View,
+	Text,
+	TouchableWithoutFeedback
 } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
@@ -31,8 +33,7 @@ import Time from './Time';
 import GiftedAvatar from './GiftedAvatar';
 import I18nUtil from './I18nUtil';
 import GiftedChatInteractionManager from './GiftedChatInteractionManager';
-import Emoticons from 'react-native-emoticons';
-import SlidingUpPanel from 'rn-sliding-up-panel';
+import Emoticons, * as emoticons from 'react-native-emoticons';
 
 // Min and max heights of ToolbarInput and Composer
 // Needed for Composer auto grow and ScrollView animation
@@ -61,10 +62,7 @@ class GiftedChat extends React.Component {
 			composerHeight: MIN_COMPOSER_HEIGHT,
 			messagesContainerHeight: null,
 			typingDisabled: false,
-			slidePanelVisible: false,
-			slidePanelMaxHeight: Platform.select({ ios: 400, android: 400 }),
-			slidePanelMinHeight: 0,
-			slidePanelBackdrop: true,
+			emoticonsVisible: false,
 		};
 
 		this.onKeyboardWillShow = this.onKeyboardWillShow.bind(this);
@@ -317,16 +315,12 @@ class GiftedChat extends React.Component {
 	renderMessages() {
 		const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
 		return (
-			<AnimatedView style={{
-				height: this.state.messagesContainerHeight,
-			}}>
+			<AnimatedView style={{height: this.state.messagesContainerHeight,}}>
 				<MessageContainer
 					{...this.props}
-
+					onPress={this.onMessagePress.bind(this)}
 					invertibleScrollViewProps={this.invertibleScrollViewProps}
-
 					messages={this.getMessages()}
-
 					ref={component => this._messageContainerRef = component}
 				/>
 				{this.renderChatFooter()}
@@ -499,37 +493,50 @@ class GiftedChat extends React.Component {
 	}
 
 	onBackspacePress = () => {
-
+		if (this.state.text.length > 0) {
+			let oldText = emoticons.splitter(this.state.text);
+			oldText.pop();
+			this.setState({
+				text: oldText.join('')
+			});
+		}
 	}
 
 	onPressEmojiIcon = () => {
-		const visible = !this.state.slidePanelVisible;
+		const visible = !this.state.emoticonsVisible;
 		this.setState({
-			slidePanelVisible: visible,
+			emoticonsVisible: visible,
 		});
-		// console.log('onPressEmojiIcon visible:', visible);
-		setTimeout(() => {
-			this.slidePanel.transitionTo(visible === true ? this.state.slidePanelMaxHeight : this.state.slidePanelMinHeight);
-		}, 10);
 	}
 
 	renderEmojiView() {
 		return (
-			<SlidingUpPanel ref={el => this.slidePanel = el}
-				visible={this.state.slidePanelVisible} showBackdrop={this.state.slidePanelBackdrop} allowDragging={false}
-				draggableRange={{ top: this.state.slidePanelMaxHeight, bottom: this.state.slidePanelMinHeight }}
-				onRequestClose={() => { this.setState({slidePanelVisible:false})}}>
-				<View style={styles.slideView}>
-					<Emoticons
-						onEmoticonPress={this.onEmoticonPress.bind(this)}
-						onBackspacePress={this.onBackspacePress.bind(this)}
-						concise={this.props.emojiConcise}
-						showPlusBar={this.props.emojiShowPlusBar}
-						showHistoryBar={this.props.emojiShowHistoryBar}
-					/>
-				</View>
-			</SlidingUpPanel>
-		)
+			<Emoticons
+				onEmoticonPress={this.onEmoticonPress.bind(this)}
+				onBackspacePress={this.onBackspacePress.bind(this)}
+				concise={this.props.emojiConcise}
+				showPlusBar={this.props.emojiShowPlusBar}
+				showHistoryBar={this.props.emojiShowHistoryBar}
+				show={this.state.emoticonsVisible}
+				offsetBottom={45}
+			/>
+		);
+	}
+
+	onMessagePress = () => {
+		if (this.state.emoticonsVisible === true) {
+			this.setState({
+				emoticonsVisible:false
+			});
+		}
+	}
+
+	onMessageContainerPress = () => {
+		if (this.state.emoticonsVisible === true) {
+			this.setState({
+				emoticonsVisible:false
+			});
+		}
 	}
 
 	render() {
@@ -537,7 +544,9 @@ class GiftedChat extends React.Component {
 			return (
 				<ActionSheet ref={component => this._actionSheetRef = component}>
 					<View style={styles.container} onLayout={this.onMainViewLayout}>
-						{this.renderMessages()}
+						<TouchableWithoutFeedback onPress={this.onMessageContainerPress.bind(this)}>
+							{this.renderMessages()}
+						</TouchableWithoutFeedback>
 						{this.renderInputToolbar()}
 						{this.renderEmojiView()}
 					</View>
@@ -623,7 +632,7 @@ GiftedChat.defaultProps = {
 	forceGetKeyboardHeight: false,
 	emojiConcise: false,
 	emojiShowPlusBar: false,
-	emojiShowHistoryBar: false,
+	emojiShowHistoryBar: true,
 };
 
 GiftedChat.propTypes = {

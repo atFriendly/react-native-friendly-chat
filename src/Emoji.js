@@ -12,10 +12,10 @@ import {
 export default class Emoji extends React.Component {
 	render() {
 		return (
-			<View>
+			<View style={{paddingBottom:2}}>
 				<TouchableOpacity style={styles.container} onPress={this.props.onPressEmojiIcon}>
-					<Text allowFontScaling={false} style={{fontSize:18}}>
-						{String.fromCodePoint(128512)}
+					<Text allowFontScaling={false} style={{fontSize:26}}>
+						{"\uD83D\uDE42"}
 					</Text>
 				</TouchableOpacity>
 			</View>
