@@ -371,6 +371,7 @@ class GiftedChat extends React.Component {
 			text: this.getTextFromProp(''),
 			composerHeight: newComposerHeight,
 			messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+			emoticonsVisible: false,
 		});
 	}
 
@@ -524,14 +525,14 @@ class GiftedChat extends React.Component {
 	}
 
 	onMessagePress = () => {
-		if (this.state.emoticonsVisible === true) {
-			this.setState({
-				emoticonsVisible:false
-			});
-		}
+		this.hideEmoticons();
 	}
 
 	onMessageContainerPress = () => {
+		this.hideEmoticons();
+	}
+
+	hideEmoticons = () => {
 		if (this.state.emoticonsVisible === true) {
 			this.setState({
 				emoticonsVisible:false
