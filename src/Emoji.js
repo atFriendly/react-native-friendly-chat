@@ -14,7 +14,7 @@ export default class Emoji extends React.Component {
 		return (
 			<View style={{paddingBottom:2}}>
 				<TouchableOpacity style={styles.container} onPress={this.props.onPressEmojiIcon}>
-					<Text allowFontScaling={false} style={{fontSize:26}}>
+					<Text allowFontScaling={false} style={{fontSize:Platform.select({ios:26, android:22})}}>
 						{"\uD83D\uDE42"}
 					</Text>
 				</TouchableOpacity>
