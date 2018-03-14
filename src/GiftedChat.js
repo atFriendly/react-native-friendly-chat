@@ -6,7 +6,6 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	TouchableWithoutFeedback
 } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
@@ -528,10 +527,6 @@ class GiftedChat extends React.Component {
 		this.hideEmoticons();
 	}
 
-	onMessageContainerPress = () => {
-		this.hideEmoticons();
-	}
-
 	hideEmoticons = () => {
 		if (this.state.emoticonsVisible === true) {
 			this.setState({
@@ -545,9 +540,7 @@ class GiftedChat extends React.Component {
 			return (
 				<ActionSheet ref={component => this._actionSheetRef = component}>
 					<View style={styles.container} onLayout={this.onMainViewLayout}>
-						<TouchableWithoutFeedback onPress={this.onMessageContainerPress.bind(this)}>
-							{this.renderMessages()}
-						</TouchableWithoutFeedback>
+						{this.renderMessages()}
 						{this.renderInputToolbar()}
 						{this.renderEmojiView()}
 					</View>
