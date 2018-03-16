@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	Keyboard,
 } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
