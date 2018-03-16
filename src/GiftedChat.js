@@ -451,7 +451,8 @@ class GiftedChat extends React.Component {
 			textInputProps: {
 				...this.props.textInputProps,
 				ref: textInput => this.textInput = textInput,
-				maxLength: this.getIsTypingDisabled() ? 0 : this.props.maxInputLength
+				maxLength: this.getIsTypingDisabled() ? 0 : this.props.maxInputLength,
+				onFocus: this.onTextInputFocus,
 			},
 			onPressEmojiIcon: this.onPressEmojiIcon,
 		};
@@ -503,10 +504,15 @@ class GiftedChat extends React.Component {
 	}
 
 	onPressEmojiIcon = () => {
+		Keyboard.dismiss();
 		const visible = !this.state.emoticonsVisible;
 		this.setState({
 			emoticonsVisible: visible,
 		});
+	}
+
+	onTextInputFocus = () => {
+		this.hideEmoticons();
 	}
 
 	renderEmojiView() {
