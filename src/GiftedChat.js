@@ -56,12 +56,13 @@ class GiftedChat extends React.Component {
 		this._isFirstLayout = true;
 		this._locale = 'en';
 		this._messages = [];
+		this._typingDisabled = false;
 
 		this.state = {
 			isInitialized: false, // initialization will calculate maxHeight before rendering the chat
 			composerHeight: MIN_COMPOSER_HEIGHT,
 			messagesContainerHeight: null,
-			typingDisabled: false,
+			// typingDisabled: false,
 			emoticonsVisible: false,
 		};
 
@@ -207,13 +208,17 @@ class GiftedChat extends React.Component {
 	}
 
 	setIsTypingDisabled(value) {
-		this.setState({
-			typingDisabled: value
-		});
+		// requestAnimationFrame((time = 10) => {
+		// 	this.setState({
+		// 		typingDisabled: value
+		// 	});
+		// });
+		this._typingDisabled = value;
 	}
 
 	getIsTypingDisabled() {
-		return this.state.typingDisabled;
+		// return this.state.typingDisabled;
+		return this._typingDisabled;
 	}
 
 	setIsMounted(value) {
@@ -267,8 +272,10 @@ class GiftedChat extends React.Component {
 				duration: 100,
 			}).start();
 		} else {
-			this.setState({
-				messagesContainerHeight: newMessagesContainerHeight,
+			requestAnimationFrame((time = 10) => {
+				this.setState({
+					messagesContainerHeight: newMessagesContainerHeight,
+				});
 			});
 		}
 	}
@@ -284,8 +291,10 @@ class GiftedChat extends React.Component {
 				duration: 100,
 			}).start();
 		} else {
-			this.setState({
-				messagesContainerHeight: newMessagesContainerHeight,
+			requestAnimationFrame((time = 10) => {
+				this.setState({
+					messagesContainerHeight: newMessagesContainerHeight,
+				});
 			});
 		}
 	}
@@ -331,8 +340,10 @@ class GiftedChat extends React.Component {
 	onSend(messages = [], shouldResetInputToolbar = false) {
 		if (shouldResetInputToolbar === true) {
 			//   this.setIsTypingDisabled(true);
-			this.setIsTypingDisabled(false);
-			this.resetInputToolbar();
+			if (this.getIsMounted() === true) {
+				this.setIsTypingDisabled(false);
+				this.resetInputToolbar();
+			}
 		}
 
 		if (!Array.isArray(messages)) {
@@ -348,16 +359,14 @@ class GiftedChat extends React.Component {
 			};
 		});
 
+		if (shouldResetInputToolbar === true) {
+			if (this.getIsMounted() === true) {
+				this.setIsTypingDisabled(false);
+			}
+		}
+		
 		this.props.onSend(messages);
 		this.scrollToBottom();
-
-		if (shouldResetInputToolbar === true) {
-			setTimeout(() => {
-				if (this.getIsMounted() === true) {
-					this.setIsTypingDisabled(false);
-				}
-			}, 10);
-		}
 	}
 
 	resetInputToolbar() {
@@ -367,11 +376,13 @@ class GiftedChat extends React.Component {
 		this.notifyInputTextReset();
 		const newComposerHeight = MIN_COMPOSER_HEIGHT;
 		const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard(newComposerHeight);
-		this.setState({
-			text: this.getTextFromProp(''),
-			composerHeight: newComposerHeight,
-			messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
-			emoticonsVisible: false,
+		requestAnimationFrame(() => {
+			this.setState({
+				text: this.getTextFromProp(''),
+				composerHeight: newComposerHeight,
+				messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+				emoticonsVisible: false,
+			});
 		});
 	}
 
@@ -385,9 +396,11 @@ class GiftedChat extends React.Component {
 		const newComposerHeight = Math.max(MIN_COMPOSER_HEIGHT, Math.min(MAX_COMPOSER_HEIGHT, size.height));
 		// const newMessagesContainerHeight = this.getMaxHeight() - this.calculateInputToolbarHeight(newComposerHeight) - this.getKeyboardHeight() + this.getBottomOffset();
 		const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard(newComposerHeight);
-		this.setState({
-			composerHeight: newComposerHeight,
-			messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+		requestAnimationFrame((time = 10) => {
+			this.setState({
+				composerHeight: newComposerHeight,
+				messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+			});
 		});
 	}
 
@@ -419,11 +432,13 @@ class GiftedChat extends React.Component {
 		this.setMaxHeight(layout.height);
 		const newComposerHeight = MIN_COMPOSER_HEIGHT;
 		const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard(newComposerHeight);
-		this.setState({
-			isInitialized: true,
-			text: this.getTextFromProp(''),
-			composerHeight: newComposerHeight,
-			messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+		requestAnimationFrame((time = 10) => {
+			this.setState({
+				isInitialized: true,
+				text: this.getTextFromProp(''),
+				composerHeight: newComposerHeight,
+				messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+			});
 		});
 	}
 
@@ -432,8 +447,10 @@ class GiftedChat extends React.Component {
 		const layout = e.nativeEvent.layout;
 		if (this.getMaxHeight() !== layout.height || this.getIsFirstLayout() === true) {
 			this.setMaxHeight(layout.height);
-			this.setState({
-				messagesContainerHeight: this.prepareMessagesContainerHeight(this.getBasicMessagesContainerHeight()),
+			requestAnimationFrame((time = 10) => {
+				this.setState({
+					messagesContainerHeight: this.prepareMessagesContainerHeight(this.getBasicMessagesContainerHeight()),
+				});
 			});
 		}
 		if (this.getIsFirstLayout() === true) {
@@ -489,8 +506,10 @@ class GiftedChat extends React.Component {
 
 	onEmoticonPress = (data) => {
 		// console.log('onEmoticonPress:', data);
-		this.setState({
-			text: this.state.text + data.code
+		requestAnimationFrame((time = 10) => {
+			this.setState({
+				text: this.state.text + data.code
+			});
 		});
 	}
 
@@ -498,8 +517,10 @@ class GiftedChat extends React.Component {
 		if (this.state.text.length > 0) {
 			let oldText = emoticons.splitter(this.state.text);
 			oldText.pop();
-			this.setState({
-				text: oldText.join('')
+			requestAnimationFrame((time = 10) => {
+				this.setState({
+					text: oldText.join('')
+				});
 			});
 		}
 	}
@@ -507,8 +528,10 @@ class GiftedChat extends React.Component {
 	onPressEmojiIcon = () => {
 		Keyboard.dismiss();
 		const visible = !this.state.emoticonsVisible;
-		this.setState({
-			emoticonsVisible: visible,
+		requestAnimationFrame((time = 10) => {
+			this.setState({
+				emoticonsVisible: visible,
+			});
 		});
 	}
 
@@ -536,8 +559,10 @@ class GiftedChat extends React.Component {
 
 	hideEmoticons = () => {
 		if (this.state.emoticonsVisible === true) {
-			this.setState({
-				emoticonsVisible:false
+			requestAnimationFrame((time = 10) => {
+				this.setState({
+					emoticonsVisible:false
+				});
 			});
 		}
 	}
