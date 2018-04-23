@@ -1,12 +1,7 @@
+/* eslint no-use-before-define: ["error", { "variables": false }] */
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Linking,
-  StyleSheet,
-  Text,
-  View,
-  ViewPropTypes,
-} from 'react-native';
+import { Linking, StyleSheet, Text, View, ViewPropTypes } from 'react-native';
 
 import ParsedText from 'react-native-parsed-text';
 import Communications from 'react-native-communications';
@@ -16,6 +11,7 @@ import I18n from './I18nUtil';
 const WWW_URL_PATTERN = /^www\./i;
 
 export default class MessageText extends React.Component {
+
   constructor(props) {
     super(props);
     this.onUrlPress = this.onUrlPress.bind(this);
@@ -31,6 +27,7 @@ export default class MessageText extends React.Component {
     } else {
       Linking.canOpenURL(url).then((supported) => {
         if (!supported) {
+          // eslint-disable-next-line
           console.error('No handler for URL:', url);
         } else {
           Linking.openURL(url);
@@ -57,7 +54,9 @@ export default class MessageText extends React.Component {
 		break;
         case 1:
 			Communications.phonecall(phone, true);
-          break;
+		  break;
+		default:
+		  break;
       }
     });
   }
@@ -67,23 +66,37 @@ export default class MessageText extends React.Component {
   }
 
   render() {
-    const linkStyle = StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]);
+    const linkStyle = StyleSheet.flatten([
+      styles[this.props.position].link,
+      this.props.linkStyle[this.props.position],
+    ]);
     return (
-      <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
+      <View
+        style={[
+          styles[this.props.position].container,
+          this.props.containerStyle[this.props.position],
+        ]}
+      >
         <ParsedText
-          style={[styles[this.props.position].text, this.props.textStyle[this.props.position]]}
+          style={[
+            styles[this.props.position].text,
+            this.props.textStyle[this.props.position],
+            this.props.customTextStyle,
+          ]}
           parse={[
             ...this.props.parsePatterns(linkStyle),
-            {type: 'url', style: linkStyle, onPress: this.onUrlPress},
-            {type: 'phone', style: linkStyle, onPress: this.onPhonePress},
-            {type: 'email', style: linkStyle, onPress: this.onEmailPress},
+            { type: 'url', style: linkStyle, onPress: this.onUrlPress },
+            { type: 'phone', style: linkStyle, onPress: this.onPhonePress },
+            { type: 'email', style: linkStyle, onPress: this.onEmailPress },
           ]}
+          childrenProps={{ ...this.props.textProps }}
         >
           {this.props.currentMessage.text}
         </ParsedText>
       </View>
     );
   }
+
 }
 
 const textStyle = {
@@ -97,8 +110,7 @@ const textStyle = {
 
 const styles = {
   left: StyleSheet.create({
-    container: {
-    },
+    container: {},
     text: {
       color: 'black',
       ...textStyle,
@@ -109,8 +121,7 @@ const styles = {
     },
   }),
   right: StyleSheet.create({
-    container: {
-    },
+    container: {},
     text: {
       color: 'white',
       ...textStyle,
@@ -134,6 +145,8 @@ MessageText.defaultProps = {
   containerStyle: {},
   textStyle: {},
   linkStyle: {},
+  customTextStyle: {},
+  textProps: {},
   parsePatterns: () => [],
 };
 
@@ -153,4 +166,6 @@ MessageText.propTypes = {
     right: Text.propTypes.style,
   }),
   parsePatterns: PropTypes.func,
+  textProps: PropTypes.object,
+  customTextStyle: Text.propTypes.style,
 };

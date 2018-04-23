@@ -1,13 +1,14 @@
+/* eslint
+    no-param-reassign: 0,
+    no-use-before-define: ["error", { "variables": false }],
+    no-return-assign: 0,
+    no-mixed-operators: 0,
+    react/sort-comp: 0
+*/
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-	Animated,
-	Platform,
-	StyleSheet,
-	View,
-	Text,
-	Keyboard,
-} from 'react-native';
+import { Animated, Platform, StyleSheet, View, Text, Keyboard } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
 import moment from 'moment';
@@ -19,7 +20,7 @@ import * as utils from './utils';
 import Actions from './Actions';
 import Avatar from './Avatar';
 import Bubble from './Bubble';
-import SystemMessage from "./SystemMessage";;
+import SystemMessage from './SystemMessage';
 import MessageImage from './MessageImage';
 import MessageText from './MessageText';
 import Composer from './Composer';
@@ -32,17 +33,15 @@ import Send from './Send';
 import Time from './Time';
 import GiftedAvatar from './GiftedAvatar';
 import I18nUtil from './I18nUtil';
-import GiftedChatInteractionManager from './GiftedChatInteractionManager';
 import Emoticons, * as emoticons from 'react-native-friendly-emoticons';
 
-// Min and max heights of ToolbarInput and Composer
-// Needed for Composer auto grow and ScrollView animation
-// TODO move these values to Constants.js (also with used colors #b2b2b2)
-const MIN_COMPOSER_HEIGHT = Platform.select({
-	ios: 33,
-	android: 41,
-});
-const MAX_COMPOSER_HEIGHT = 100;
+import {
+	MIN_COMPOSER_HEIGHT,
+	MAX_COMPOSER_HEIGHT,
+	DEFAULT_PLACEHOLDER,
+	TIME_FORMAT,
+	DATE_FORMAT,
+} from './Constant';
 
 class GiftedChat extends React.Component {
 	constructor(props) {
@@ -79,7 +78,7 @@ class GiftedChat extends React.Component {
 
 
 		this.invertibleScrollViewProps = {
-			inverted: true,
+			inverted: this.props.inverted,
 			keyboardShouldPersistTaps: this.props.keyboardShouldPersistTaps,
 			onKeyboardWillShow: this.onKeyboardWillShow,
 			onKeyboardWillHide: this.onKeyboardWillHide,
@@ -88,18 +87,18 @@ class GiftedChat extends React.Component {
 		};
 	}
 
-	static append(currentMessages = [], messages) {
+	static append(currentMessages = [], messages, inverted = true) {
 		if (!Array.isArray(messages)) {
 			messages = [messages];
 		}
-		return messages.concat(currentMessages);
+		return inverted ? messages.concat(currentMessages) : currentMessages.concat(messages);
 	}
 
-	static prepend(currentMessages = [], messages) {
+	static prepend(currentMessages = [], messages, inverted = true) {
 		if (!Array.isArray(messages)) {
 			messages = [messages];
 		}
-		return currentMessages.concat(messages);
+		return inverted ? currentMessages.concat(messages) : messages.concat(currentMessages);
 	}
 
 	getChildContext() {
@@ -229,10 +228,11 @@ class GiftedChat extends React.Component {
 		return this._isMounted;
 	}
 
-	// TODO
-	// setMinInputToolbarHeight
+	// TODO: setMinInputToolbarHeight
 	getMinInputToolbarHeight() {
-		return this.props.renderAccessory ? this.props.minInputToolbarHeight * 2 : this.props.minInputToolbarHeight;
+		return this.props.renderAccessory 
+			? this.props.minInputToolbarHeight * 2 
+			: this.props.minInputToolbarHeight;
 	}
 
 	calculateInputToolbarHeight(composerHeight) {
@@ -264,12 +264,11 @@ class GiftedChat extends React.Component {
 		this.setIsTypingDisabled(true);
 		this.setKeyboardHeight(e.endCoordinates ? e.endCoordinates.height : e.end.height);
 		this.setBottomOffset(this.props.bottomOffset);
-		// const newMessagesContainerHeight = (this.getMaxHeight() - (this.state.composerHeight + (this.getMinInputToolbarHeight() - MIN_COMPOSER_HEIGHT))) - this.getKeyboardHeight() + this.getBottomOffset();
 		const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard();
 		if (this.props.isAnimated === true) {
 			Animated.timing(this.state.messagesContainerHeight, {
 				toValue: newMessagesContainerHeight,
-				duration: 100,
+				duration: 210,
 			}).start();
 		} else {
 			requestAnimationFrame((time = 10) => {
@@ -288,7 +287,7 @@ class GiftedChat extends React.Component {
 		if (this.props.isAnimated === true) {
 			Animated.timing(this.state.messagesContainerHeight, {
 				toValue: newMessagesContainerHeight,
-				duration: 100,
+				duration: 210,
 			}).start();
 		} else {
 			requestAnimationFrame((time = 10) => {
@@ -314,11 +313,10 @@ class GiftedChat extends React.Component {
 	}
 
 	scrollToBottom(animated = true) {
-		if (this._messageContainerRef === null) { return }
-		this._messageContainerRef.scrollTo({
-			y: 0,
-			animated,
-		});
+		if (this._messageContainerRef === null) { 
+			return 
+		}
+		this._messageContainerRef.scrollTo({ y: 0, animated });
 	}
 
 	renderMessages() {
@@ -338,14 +336,6 @@ class GiftedChat extends React.Component {
 	}
 
 	onSend(messages = [], shouldResetInputToolbar = false) {
-		if (shouldResetInputToolbar === true) {
-			//   this.setIsTypingDisabled(true);
-			if (this.getIsMounted() === true) {
-				this.setIsTypingDisabled(false);
-				this.resetInputToolbar();
-			}
-		}
-
 		if (!Array.isArray(messages)) {
 			messages = [messages];
 		}
@@ -362,11 +352,20 @@ class GiftedChat extends React.Component {
 		if (shouldResetInputToolbar === true) {
 			if (this.getIsMounted() === true) {
 				this.setIsTypingDisabled(false);
+				this.resetInputToolbar();
 			}
 		}
 		
 		this.props.onSend(messages);
 		this.scrollToBottom();
+
+		if (shouldResetInputToolbar === true) {
+			setTimeout(() => {
+				if (this.getIsMounted() === true) {
+					this.setIsTypingDisabled(false);
+				}
+			}, 100);
+		}
 	}
 
 	resetInputToolbar() {
@@ -394,7 +393,6 @@ class GiftedChat extends React.Component {
 
 	onInputSizeChanged(size) {
 		const newComposerHeight = Math.max(MIN_COMPOSER_HEIGHT, Math.min(MAX_COMPOSER_HEIGHT, size.height));
-		// const newMessagesContainerHeight = this.getMaxHeight() - this.calculateInputToolbarHeight(newComposerHeight) - this.getKeyboardHeight() + this.getBottomOffset();
 		const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard(newComposerHeight);
 		requestAnimationFrame((time = 10) => {
 			this.setState({
@@ -444,7 +442,7 @@ class GiftedChat extends React.Component {
 
 	onMainViewLayout(e) {
 		// fix an issue when keyboard is dismissing during the initialization
-		const layout = e.nativeEvent.layout;
+		const { layout } = e.nativeEvent;
 		if (this.getMaxHeight() !== layout.height || this.getIsFirstLayout() === true) {
 			this.setMaxHeight(layout.height);
 			requestAnimationFrame((time = 10) => {
@@ -468,15 +466,12 @@ class GiftedChat extends React.Component {
 			onTextChanged: this.onInputTextChanged,
 			textInputProps: {
 				...this.props.textInputProps,
-				ref: textInput => this.textInput = textInput,
+				ref: (textInput) => (this.textInput = textInput),
 				maxLength: this.getIsTypingDisabled() ? 0 : this.props.maxInputLength,
 				onFocus: this.onTextInputFocus,
 			},
 			onPressEmojiIcon: this.onPressEmojiIcon,
 		};
-		if (this.getIsTypingDisabled()) {
-			inputToolbarProps.textInputProps.maxLength = 0;
-		}
 		if (this.props.renderInputToolbar) {
 			return this.props.renderInputToolbar(inputToolbarProps);
 		}
@@ -601,18 +596,15 @@ GiftedChat.childContextTypes = {
 GiftedChat.defaultProps = {
 	messages: [],
 	text: undefined,
-	placeholder: 'Type a message...',
+	placeholder: DEFAULT_PLACEHOLDER,
 	messageIdGenerator: () => uuid.v4(),
 	user: {},
 	onSend: () => { },
 	onResend: () => {
 	},
-	loadEarlier: false,
-	onLoadEarlier: () => {
-	},
 	locale: null,
-	timeFormat: 'LT',
-	dateFormat: 'll',
+	timeFormat: TIME_FORMAT,
+	dateFormat: DATE_FORMAT,
 	isAnimated: Platform.select({
 		ios: true,
 		android: false,
@@ -634,6 +626,8 @@ GiftedChat.defaultProps = {
 	renderMessageImage: null,
 	imageProps: {},
 	lightboxProps: {},
+	textInputProps: {},
+	listViewProps: {},
 	renderCustomView: null,
 	renderDocView: null,
 	renderDay: null,
@@ -648,7 +642,6 @@ GiftedChat.defaultProps = {
 	onPressActionButton: null,
 	bottomOffset: 0,
 	minInputToolbarHeight: 44,
-	listViewProps: {},
 	keyboardShouldPersistTaps: Platform.select({
 		ios: 'never',
 		android: 'always',
@@ -656,13 +649,14 @@ GiftedChat.defaultProps = {
 	onInputTextChanged: null,
 	maxInputLength: null,
 	forceGetKeyboardHeight: false,
+	inverted: true,
 	emojiConcise: false,
 	emojiShowPlusBar: false,
 	emojiShowHistoryBar: true,
 };
 
 GiftedChat.propTypes = {
-	messages: PropTypes.array,
+	messages: PropTypes.arrayOf(PropTypes.object),
 	text: PropTypes.string,
 	placeholder: PropTypes.string,
 	messageIdGenerator: PropTypes.func,
@@ -709,6 +703,8 @@ GiftedChat.propTypes = {
 	onInputTextChanged: PropTypes.func,
 	maxInputLength: PropTypes.number,
 	forceGetKeyboardHeight: PropTypes.bool,
+	inverted: PropTypes.bool,
+	textInputProps: PropTypes.object,
 	emojiConcise: PropTypes.bool,
 	emojiShowPlusBar: PropTypes.bool,
 	emojiShowHistoryBar: PropTypes.bool,

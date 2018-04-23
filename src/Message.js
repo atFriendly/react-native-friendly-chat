@@ -1,11 +1,8 @@
+/* eslint no-use-before-define: ["error", { "variables": false }], react-native/no-inline-styles: 0 */
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-	View,
-	ViewPropTypes,
-	StyleSheet,
-	TouchableWithoutFeedback
-} from 'react-native';
+import { View, ViewPropTypes, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import Avatar from './Avatar';
 import Bubble from './Bubble';
@@ -17,42 +14,33 @@ import { isSameUser, isSameDay } from './utils';
 
 export default class Message extends React.Component {
 
-	getInnerComponentProps() {
-		const { containerStyle, ...props } = this.props;
-		return {
-			...props,
-			isSameUser,
-			isSameDay
-		}
+  getInnerComponentProps() {
+    const { containerStyle, ...props } = this.props;
+    return {
+      ...props,
+      isSameUser,
+      isSameDay,
+    };
+  }
 
-	}
+  renderDay() {
+    if (this.props.currentMessage.createdAt) {
+      const dayProps = this.getInnerComponentProps();
+      if (this.props.renderDay) {
+        return this.props.renderDay(dayProps);
+      }
+      return <Day {...dayProps} />;
+    }
+    return null;
+  }
 
-	renderTag() {
-		if (this.props.currentMessage.isTag) {
-			const tagProps = this.getInnerComponentProps();
-			return <Tag {...tagProps} />;
-		}
-		return null;
-	}
-
-	renderDay() {
-		if (this.props.currentMessage.createdAt) {
-			const dayProps = this.getInnerComponentProps();
-			if (this.props.renderDay) {
-				return this.props.renderDay(dayProps);
-			}
-			return <Day {...dayProps} />;
-		}
-		return null;
-	}
-
-	renderBubble() {
-		const bubbleProps = this.getInnerComponentProps();
-		if (this.props.renderBubble) {
-			return this.props.renderBubble(bubbleProps);
-		}
-		return <Bubble {...bubbleProps} />;
-	}
+  renderBubble() {
+    const bubbleProps = this.getInnerComponentProps();
+    if (this.props.renderBubble) {
+      return this.props.renderBubble(bubbleProps);
+    }
+    return <Bubble {...bubbleProps} />;
+  }
 
 	renderSystemMessage() {
 		const systemMessageProps = this.getInnerComponentProps();
@@ -63,7 +51,7 @@ export default class Message extends React.Component {
 	}
 
 	renderAvatar() {
-		//dont show avatar at single chat
+		//一對一聊天不顯示頭像
 		if (!this.props.currentMessage.groupMessage)
 			return null;
 		if (this.props.user._id === this.props.currentMessage.user._id && !this.props.showUserAvatar) {
@@ -77,21 +65,39 @@ export default class Message extends React.Component {
 		return <Avatar {...avatarProps} />;
 	}
 
+	renderTag() {
+		if (this.props.currentMessage.isTag) {
+			const tagProps = this.getInnerComponentProps();
+			return <Tag {...tagProps} />;
+		}
+		return null;
+	}
+
 	render() {
 		if (this.props.currentMessage.isTag) {
 			return this.renderTag();
 		}
+		const sameUser = isSameUser(this.props.currentMessage, this.props.nextMessage);
 		return (
 			<TouchableWithoutFeedback {...this.props}>
 				<View>
 					{this.renderDay()}
-					<View style={[styles[this.props.position].container, {
-						marginBottom: isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
-					}, this.props.containerStyle[this.props.position]]}>
+					{this.props.currentMessage.system ? (
+					  this.renderSystemMessage()
+					) : (
+					  <View 
+					    style={[
+						  styles[this.props.position].container, 
+						  {	marginBottom: sameUser ? 2 : 10	}, 
+						  !this.props.inverted && { marginBottom: 2 },
+						  this.props.containerStyle[this.props.position],
+						]}
+					  >
 						{this.props.position === 'left' ? this.renderAvatar() : null}
 						{this.renderBubble()}
 						{this.props.position === 'right' ? this.renderAvatar() : null}
-					</View>
+					  </View>
+					)}
 				</View>
 			</TouchableWithoutFeedback>
 		);
@@ -130,6 +136,8 @@ Message.defaultProps = {
 	previousMessage: {},
 	user: {},
 	containerStyle: {},
+	showUserAvatar: true,
+	inverted: true,
 };
 
 Message.propTypes = {
@@ -143,6 +151,7 @@ Message.propTypes = {
 	nextMessage: PropTypes.object,
 	previousMessage: PropTypes.object,
 	user: PropTypes.object,
+	inverted: PropTypes.bool,
 	containerStyle: PropTypes.shape({
 		left: ViewPropTypes.style,
 		right: ViewPropTypes.style,

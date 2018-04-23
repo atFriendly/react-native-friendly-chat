@@ -1,8 +1,10 @@
 .DS_Store
-.vscode/
-.idea
 node_modules/
+.expo/
 npm-debug.log
 TODO.md
 README.md
 
+.idea
+.vscode
+*.log

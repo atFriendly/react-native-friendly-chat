@@ -1,51 +1,71 @@
+/* eslint no-use-before-define: ["error", { "variables": false }] */
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-	StyleSheet,
-	View,
-	ViewPropTypes,
-	TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, Keyboard, ViewPropTypes, TouchableOpacity } from 'react-native';
 
 import Composer from './Composer';
 import Send from './Send';
 import Actions from './Actions';
+import Color from './Color';
 import Emoji from './Emoji';
 
 export default class InputToolbar extends React.Component {
-	renderActions() {
-		if (this.props.renderActions) {
-			return this.props.renderActions(this.props);
-		} else if (this.props.onPressActionButton) {
-			return <Actions {...this.props} />;
-		}
-		return null;
-	}
 
-	renderEmoji() {
-		return (
-			<Emoji {...this.props} />
-		);
-	}
+  constructor(props) {
+    super(props);
 
-	renderSend() {
-		if (this.props.renderSend) {
-			return this.props.renderSend(this.props);
-		}
-		return <Send {...this.props} />;
-	}
+    this.keyboardWillShow = this.keyboardWillShow.bind(this);
+    this.keyboardWillHide = this.keyboardWillHide.bind(this);
 
-	renderComposer() {
-		if (this.props.renderComposer) {
-			return this.props.renderComposer(this.props);
-		}
+    this.state = {
+      position: 'absolute',
+    };
+  }
 
-		return (
-			<Composer
-				{...this.props}
-			/>
-		);
+  componentWillMount() {
+    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+  }
+
+  componentWillUnmount() {
+    this.keyboardWillShowListener.remove();
+    this.keyboardWillHideListener.remove();
+  }
+
+  keyboardWillShow() {
+    this.setState({
+      position: 'relative',
+    });
+  }
+
+  keyboardWillHide() {
+    this.setState({
+      position: 'absolute',
+    });
+  }
+
+  renderActions() {
+    if (this.props.renderActions) {
+      return this.props.renderActions(this.props);
+    } else if (this.props.onPressActionButton) {
+      return <Actions {...this.props} />;
+    }
+    return null;
+  }
+
+  renderSend() {
+    if (this.props.renderSend) {
+      return this.props.renderSend(this.props);
+    }
+    return <Send {...this.props} />;
+  }
+  renderComposer() {
+	if (this.props.renderComposer) {
+	  return this.props.renderComposer(this.props);
 	}
+    return <Composer {...this.props} />;
+  }
 
 	//   renderAccessory() {
 	//     if (this.props.renderAccessory) {
@@ -57,6 +77,12 @@ export default class InputToolbar extends React.Component {
 	//     }
 	//     return null;
 	//   }
+
+	renderEmoji() {
+		return (
+			<Emoji {...this.props} />
+		);
+	}
 
 	render() {
 		return (
@@ -76,8 +102,11 @@ export default class InputToolbar extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		borderTopWidth: StyleSheet.hairlineWidth,
-		borderTopColor: '#b2b2b2',
-		backgroundColor: '#FFFFFF',
+		borderTopColor: Color.defaultColor,
+		backgroundColor: Color.white,
+		bottom: 0,
+		left: 0,
+		right: 0,
 	},
 	primary: {
 		flexDirection: 'row',
@@ -95,14 +124,15 @@ const styles = StyleSheet.create({
 });
 
 InputToolbar.defaultProps = {
-	renderAccessory: null,
-	renderActions: null,
-	renderSend: null,
-	renderComposer: null,
-	containerStyle: {},
-	primaryStyle: {},
-	accessoryStyle: {},
-	onPressEmojiIcon: () => {},
+  renderAccessory: null,
+  renderActions: null,
+  renderSend: null,
+  renderComposer: null,
+  containerStyle: {},
+  primaryStyle: {},
+  accessoryStyle: {},
+  onPressActionButton: () => {},
+  onPressEmojiIcon: () => {},
 };
 
 InputToolbar.propTypes = {

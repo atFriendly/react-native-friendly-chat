@@ -1,18 +1,10 @@
+/* eslint no-use-before-define: ["error", { "variables": false }] */
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  View,
-  ViewPropTypes,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Modal,
-  Text
-} from 'react-native';
+import { Image, StyleSheet, View, ViewPropTypes, Dimensions, TouchableWithoutFeedback, Modal, Text } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 import PhotoView from 'react-native-photo-view';
-import GiftedChatInteractionManager from './GiftedChatInteractionManager';
 import I18n from './I18nUtil';
 
 export default class MessageImage extends React.Component {
@@ -52,53 +44,45 @@ export default class MessageImage extends React.Component {
 			clearTimeout(this.errTimer);
 		// console.log('onError rt:', this.state.retryTime);
 		if (this.state.retryTime >= 3) {
-			// GiftedChatInteractionManager.runAfterInteractions(() => {
-				this.errTimer = setTimeout(() => {
-					if (this._isMounted === false)
-						return;
-					this.setState({
-						switchToDefaultImg: true
-					});
-				}, 100);
-    		// });
+			this.errTimer = setTimeout(() => {
+				if (this._isMounted === false)
+					return;
+				this.setState({
+					switchToDefaultImg: true
+				});
+			}, 100);
 		}
 		else {
-			// GiftedChatInteractionManager.runAfterInteractions(() => {
-				this.errTimer = setTimeout(() => {
-					const newRetryTime = this.state.retryTime + 1;
-					if (this._isMounted === false)
-						return;
-					this.setState({
-						retryTime: newRetryTime,
-						uri: this.getFullSizeImageUri() + '&retryTime=' + newRetryTime, 
-					});
-				}, 100);
-    		// });
+			this.errTimer = setTimeout(() => {
+				const newRetryTime = this.state.retryTime + 1;
+				if (this._isMounted === false)
+					return;
+				this.setState({
+					retryTime: newRetryTime,
+					uri: this.getFullSizeImageUri() + '&retryTime=' + newRetryTime, 
+				});
+			}, 100);
 		}
 	}
 
 	onOpen() {
-		// GiftedChatInteractionManager.runAfterInteractions(() => {
-			setTimeout(() => {
-				this.setState({
-					uri: this.getFullSizeImageUri(),
-					retryTime: 0,
-					switchToDefaultImg: false,
-					openModal: true,
-				});
-			}, 100);
-		// });
+		setTimeout(() => {
+			this.setState({
+				uri: this.getFullSizeImageUri(),
+				retryTime: 0,
+				switchToDefaultImg: false,
+				openModal: true,
+			});
+		}, 100);
 	}
 
 	onClose() {
-		// GiftedChatInteractionManager.runAfterInteractions(() => {
-			setTimeout(() => {
-				this.setState({
-					uri: this.getThumbImageUri(),
-					openModal: false,
-				});
-			}, 100);
-		// });
+		setTimeout(() => {
+			this.setState({
+				uri: this.getThumbImageUri(),
+				openModal: false,
+			});
+		}, 100);
 	}
 
 	getThumbImageUri() {
@@ -218,6 +202,8 @@ MessageImage.defaultProps = {
   },
   containerStyle: {},
   imageStyle: {},
+  imageProps: {},
+  lightboxProps: {},
 };
 
 MessageImage.propTypes = {

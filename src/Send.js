@@ -1,51 +1,26 @@
+/* eslint no-use-before-define: ["error", { "variables": false }] */
+
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  ViewPropTypes,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ViewPropTypes } from 'react-native';
+import Color from './Color';
 import I18n from './I18nUtil';
 
-export default class Send extends React.Component {
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.props.text.trim().length === 0 && nextProps.text.trim().length > 0 || this.props.text.trim().length > 0 && nextProps.text.trim().length === 0) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-  render() {
-    // if (this.props.text.trim().length > 0) {
+export default function Send({ text, containerStyle, onSend, children, textStyle, label, alwaysShowSend }) {
+	if (alwaysShowSend || text.trim().length > 0) {
       return (
-        <TouchableWithoutFeedback
+        <TouchableOpacity
           style={[styles.container, this.props.containerStyle]}
           onPress={() => {
-			if (this.props.text.trim().length > 0) {
-				requestAnimationFrame(() => {
-					setTimeout(() => {
-						this.props.onSend({text: this.props.text.trim()}, true);
-					}, 0);
-				});
-			}
+			onSend({ text: text.trim()}, true);
           }}
           accessibilityTraits="button"
         >
-			<View>
-				{
-					this.props.children ||	
-					<Text allowFontScaling={false} style={[styles.text, this.props.textStyle]}>
-						{I18n.get('Send')}
-					</Text>
-				}
-			</View>
-        </TouchableWithoutFeedback>
+		  <View>{children || <Text allowFontScaling={false} style={[styles.text, textStyle]}>{I18n.get('Send')}</Text>}</View>
+        </TouchableOpacity>
       );
-    // }
-    // return <View/>;
   }
+  return <View />;
 }
 
 const styles = StyleSheet.create({
@@ -54,20 +29,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   text: {
-    color: '#0084ff',
+    color: Color.defaultBlue,
     fontWeight: '600',
     fontSize: 17,
-    backgroundColor: 'transparent',
+    backgroundColor: Color.backgroundTransparent,
     marginBottom: 12,
     marginLeft: 10,
     marginRight: 10,
-	// paddingTop: 10,
-	// paddingBottom: 10,
-	// paddingLeft: 8,
-	// paddingRight: 8,
-	// marginBottom: 2,
-    // marginLeft: 2,
-    // marginRight: 2,
   },
 });
 
@@ -77,6 +45,8 @@ Send.defaultProps = {
   label: 'Send',
   containerStyle: {},
   textStyle: {},
+  children: null,
+  alwaysShowSend: false,
 };
 
 Send.propTypes = {
@@ -85,4 +55,6 @@ Send.propTypes = {
   label: PropTypes.string,
   containerStyle: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
+  children: PropTypes.element,
+  alwaysShowSend: PropTypes.bool,
 };

@@ -1,3 +1,8 @@
 example/
+example-expo/
+example-slack-message/
 TODO.md
 screenshots/
+.babelrc
+tests/
+codecov.yml
