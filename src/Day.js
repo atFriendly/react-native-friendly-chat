@@ -19,7 +19,7 @@ export default function Day(
       <View style={[styles.container, containerStyle]}>
         <View style={wrapperStyle}>
           <Text style={[styles.text, textStyle]}>
-		    {moment(this.props.currentMessage.createdAt).locale(this.context.getLocale()).format('YYYY.MM.DD ddd').toUpperCase()}
+		    {moment(currentMessage.createdAt).locale(context.getLocale()).format('YYYY.MM.DD ddd').toUpperCase()}
           </Text>
         </View>
       </View>

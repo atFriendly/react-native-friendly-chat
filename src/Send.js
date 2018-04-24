@@ -10,7 +10,7 @@ export default function Send({ text, containerStyle, onSend, children, textStyle
 	if (alwaysShowSend || text.trim().length > 0) {
       return (
         <TouchableOpacity
-          style={[styles.container, this.props.containerStyle]}
+          style={[styles.container, containerStyle]}
           onPress={() => {
 			onSend({ text: text.trim()}, true);
           }}

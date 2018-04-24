@@ -13,8 +13,8 @@ export default function Time({ position, containerStyle, currentMessage, timeFor
   return (
     <View style={[styles[position].container, containerStyle[position]]}>
       <Text style={[styles[position].text, textStyle[position]]}>
-	    {moment(this.props.currentMessage.createdAt)
-		  .locale(this.context.getLocale())
+	    {moment(currentMessage.createdAt)
+		  .locale(context.getLocale())
 		  .format('HH:mm')}
       </Text>
     </View>
