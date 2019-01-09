@@ -22,9 +22,9 @@ import Time from './Time';
 import I18n from './I18nUtil';
 import Color from './Color';
 
-import { isSameUser, isSameDay, warnDeprecated } from './utils';
+import { isSameUser, isSameDay } from './utils';
 
-export default class Bubble extends React.Component {
+export default class Bubble extends React.PureComponent {
 
   constructor(props) {
 	super(props);
@@ -191,14 +191,7 @@ export default class Bubble extends React.Component {
     return null;
   }
 
-  	renderCustomView() {
-		if (this.props.renderCustomView) {
-			return this.props.renderCustomView(this.props);
-		}
-		return null;
-	}
-
-	renderResend() {
+  renderResend() {
 		if (!this.props.currentMessage.notSent || this.props.position === 'left')
 			return null;
 		const icon = Platform.select({
@@ -218,7 +211,15 @@ export default class Bubble extends React.Component {
 				</View>
 			</TouchableOpacity>
 		);
+  }
+  
+  renderCustomView() {
+		if (this.props.renderCustomView) {
+			return this.props.renderCustomView(this.props);
+		}
+		return null;
 	}
+
 	render() {
 		let uploadStyle = {};
 		if (this.props.currentMessage.progress) {

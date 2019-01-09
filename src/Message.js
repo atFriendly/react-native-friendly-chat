@@ -1,4 +1,4 @@
-/* eslint no-use-before-define: ["error", { "variables": false }], react-native/no-inline-styles: 0 */
+/* eslint react-native/no-inline-styles: 0 */
 
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -12,7 +12,28 @@ import Tag from './Tag';
 
 import { isSameUser, isSameDay } from './utils';
 
-export default class Message extends React.Component {
+const styles = {
+  left: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-start',
+      marginLeft: 8,
+      marginRight: 0,
+    },
+  }),
+  right: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
+      marginLeft: 0,
+      marginRight: 8,
+    },
+  }),
+};
+
+export default class Message extends React.PureComponent {
 
   getInnerComponentProps() {
     const { containerStyle, ...props } = this.props;

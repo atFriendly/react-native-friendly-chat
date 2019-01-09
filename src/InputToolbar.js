@@ -34,15 +34,19 @@ export default class InputToolbar extends React.Component {
   }
 
   keyboardWillShow() {
-    this.setState({
-      position: 'relative',
-    });
+    if (this.state !== 'relative') {
+      this.setState({
+        position: 'relative',
+      });
+    }
   }
 
   keyboardWillHide() {
-    this.setState({
-      position: 'absolute',
-    });
+    if (this.state !== 'absolute') {
+      this.setState({
+        position: 'absolute',
+      });
+    }
   }
 
   renderActions() {
@@ -67,16 +71,14 @@ export default class InputToolbar extends React.Component {
     return <Composer {...this.props} />;
   }
 
-	//   renderAccessory() {
-	//     if (this.props.renderAccessory) {
-	//       return (
-	//         <View style={[styles.accessory, this.props.accessoryStyle]}>
-	//           {this.props.renderAccessory(this.props)}
-	//         </View>
-	//       );
-	//     }
-	//     return null;
-	//   }
+  // renderAccessory() {
+  //   if (this.props.renderAccessory) {
+  //     return (
+  //       <View style={[styles.accessory, this.props.accessoryStyle]}>{this.props.renderAccessory(this.props)}</View>
+  //     );
+  //   }
+  //   return null;
+  // }
 
 	renderEmoji() {
 		return (
@@ -86,7 +88,7 @@ export default class InputToolbar extends React.Component {
 
 	render() {
 		return (
-			<View style={[styles.container, this.props.containerStyle]}>
+			<View style={[styles.container, this.props.containerStyle, { position: this.state.position }]}>
 				<View style={[styles.primary, this.props.primaryStyle]}>
 					{this.renderActions()}
 					{this.renderEmoji()}
