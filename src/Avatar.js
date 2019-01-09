@@ -4,37 +4,6 @@ import { StyleSheet, View, ViewPropTypes } from 'react-native';
 import GiftedAvatar from './GiftedAvatar';
 import { isSameUser, isSameDay } from './utils';
 
-const styles = {
-  left: StyleSheet.create({
-    container: {
-      marginRight: 8,
-    },
-    onTop: {
-      alignSelf: 'flex-start',
-    },
-    onBottom: {},
-    image: {
-      height: 36,
-      width: 36,
-      borderRadius: 18,
-    },
-  }),
-  right: StyleSheet.create({
-    container: {
-      marginLeft: 8,
-    },
-    onTop: {
-      alignSelf: 'flex-start',
-    },
-    onBottom: {},
-    image: {
-      height: 36,
-      width: 36,
-      borderRadius: 18,
-    },
-  }),
-};
-
 export default class Avatar extends React.PureComponent {
 
   renderAvatar() {
@@ -106,9 +75,9 @@ const styles = {
     },
     onBottom: {},
     image: {
-      height: 24,
-      width: 55,
-      borderRadius: 4,
+      height: 36,
+      width: 36,
+      borderRadius: 18,
     },
   }),
   right: StyleSheet.create({
