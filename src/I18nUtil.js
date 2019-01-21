@@ -1,22 +1,21 @@
-import { getLanguages } from 'react-native-i18n';
-const data = require('./data/i18n_data.js');
-let locale = 'zh-cn';
+const data = require('./data/i18n_data.js')
+let locale = 'zh-cn'
 
 export default class I18nUtil {
 	static get(key) {
 		try {
-			const val = data[locale][key];
+			const val = data[locale][key]
 			if (val.indexOf('missing') >= 0)
-				throw val;
-			return val;
+				throw val
+			return val
 		}
 		catch (e) {
-			return key;
+			return key
 		}
 	}
 
 	static getLocale() {
-		return locale;
+		return locale
 	}
 
 	/**
@@ -25,14 +24,14 @@ export default class I18nUtil {
 	 */
 	static setLocale(loc) {
 		if (!loc) {
-			locale = 'en';
-			return;
+			locale = 'en'
+			return
 		}
 		if (loc.toLowerCase().startsWith('zh-hans'))
-			locale = 'zh-cn';
+			locale = 'zh-cn'
 		else if (loc.toLowerCase().startsWith('zh-hant'))
-			locale = 'zh-tw';
+			locale = 'zh-tw'
 		else
-			locale = loc.toLowerCase();
+			locale = loc.toLowerCase()
 	}
 }
