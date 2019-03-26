@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, ViewPropTypes, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, ViewPropTypes, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, } from 'react-native';
 
 import Avatar from './Avatar';
 import Bubble from './Bubble';
@@ -13,6 +13,13 @@ import Tag from './Tag';
 import { isSameUser, isSameDay } from './utils';
 
 export default class Message extends React.PureComponent {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      selected: false
+    }
+  }
 
   getInnerComponentProps() {
     const { containerStyle, ...props } = this.props;
@@ -71,7 +78,39 @@ export default class Message extends React.PureComponent {
 			return <Tag {...tagProps} />;
 		}
 		return null;
-	}
+  }
+  
+  renderForwardButton() {
+    if (this.props.forwardMessageMode === true) {
+      if (this.state.selected === true) {
+        return (
+          <TouchableOpacity accessibilityTraits="button"
+            onPress={() => {
+              this.setState({ selected: false })
+              this.props.onUnSelect(this.props.currentMessage)
+            }}
+          >
+            <View style={checkboxStyles.checkbox}>
+              <Text>✓</Text>
+            </View>
+          </TouchableOpacity>
+        )
+      } else {
+        return (
+          <TouchableOpacity accessibilityTraits="button"
+            onPress={() => {
+              this.setState({ selected: true })
+              this.props.onSelect(this.props.currentMessage)
+            }}
+          >
+            <View style={checkboxStyles.checkbox}>
+            </View>
+          </TouchableOpacity>
+        )
+      }
+    }
+    return null;
+  }
 
 	render() {
 		if (this.props.currentMessage.isTag) {
@@ -93,6 +132,7 @@ export default class Message extends React.PureComponent {
 						  this.props.containerStyle[this.props.position],
 						]}
 					  >
+            {this.renderForwardButton()}
 						{this.props.position === 'left' ? this.renderAvatar() : null}
 						{this.renderBubble()}
 						{this.props.position === 'right' ? this.renderAvatar() : null}
@@ -122,8 +162,18 @@ const styles = {
 			marginLeft: 0,
 			marginRight: 8,
 		},
-	}),
+  }),
 };
+
+const checkboxStyles = StyleSheet.create({
+  checkbox: {
+    margin: 2,
+    borderColor: '#666',
+    borderWidth: 1,
+    height: 23,
+    width: 23,
+  }
+})
 
 Message.defaultProps = {
 	renderAvatar: undefined,
@@ -137,7 +187,9 @@ Message.defaultProps = {
 	user: {},
 	containerStyle: {},
 	showUserAvatar: true,
-	inverted: true,
+  inverted: true,
+  onSelect: () => {},
+  onUnSelect: () => {}
 };
 
 Message.propTypes = {
@@ -155,5 +207,7 @@ Message.propTypes = {
 	containerStyle: PropTypes.shape({
 		left: ViewPropTypes.style,
 		right: ViewPropTypes.style,
-	}),
+  }),
+  onSelect: PropTypes.func,
+  onUnSelect: PropTypes.func
 };

@@ -15,6 +15,7 @@ import { FlatList, View, StyleSheet, Platform, Keyboard } from 'react-native';
 import LoadEarlier from './LoadEarlier';
 import Message from './Message';
 
+let selectedIds = []
 export default class MessageContainer extends React.PureComponent {
 
   constructor(props) {
@@ -104,10 +105,41 @@ export default class MessageContainer extends React.PureComponent {
       position: item.user._id === this.props.user._id ? 'right' : 'left',
     };
 
+    if (this.props.forwardMessageMode === true) {
+      selectedIds = []
+    }
+
     if (this.props.renderMessage) {
       return this.props.renderMessage(messageProps);
     }
-    return <Message {...messageProps} />;
+    return <Message {...messageProps} 
+      onSelect={this.onMessageSelect.bind(this)}
+      onUnSelect={this.onMessageUnSelect.bind(this)}
+    />;
+  }
+
+  onMessageSelect = (msg) => {
+    if (selectedIds.length == 0) {
+      selectedIds.push(msg.realId)
+    } else {
+      const existed = selectedIds.find(id => {
+        return msg.realId === id
+      })
+      if (!existed) {
+        selectedIds.push(msg.realId)
+      }
+    }
+  }
+
+  onMessageUnSelect = (msg) => {
+    const index = selectedIds.indexOf(msg.realId)
+    if (index > -1) {
+      selectedIds.splice(index, 1)
+    }
+  }
+
+  getSelectedIds = () => {
+    return selectedIds || []
   }
 
   renderHeaderWrapper() {

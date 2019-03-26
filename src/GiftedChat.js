@@ -560,7 +560,42 @@ class GiftedChat extends React.Component {
 				});
 			});
 		}
-	}
+  }
+  
+  renderForwardMessageBar = () => {
+    if (this.props.forwardMessageMode === true) {
+      return (
+        <View>
+          <TouchableOpacity 
+            onPress={() => {
+              //TODO:
+              this.props.onForwardMessages(this._messageContainerRef.getSelectedIds())
+            }}
+            accessibilityTraits="button">
+            <View>
+              <Text allowFontScaling={false} style={[styles.forwardButtonText, styles.forwardButtonConfirmText]}>
+                {I18n.get('Confirm')}
+              </Text>}
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            onPress={() => {
+              //TODO:
+              this.props.onForwardMessages([])
+            }}
+            accessibilityTraits="button">
+            <View>
+              <Text allowFontScaling={false} style={[styles.forwardButtonText, styles.forwardButtonConfirmText]}>
+                {I18n.get('Cancel')}
+              </Text>}
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    } else {
+      return null
+    }
+  }
 
 	render() {
 		if (this.state.isInitialized === true) {
@@ -570,6 +605,7 @@ class GiftedChat extends React.Component {
 						{this.renderMessages()}
 						{this.renderInputToolbar()}
 						{this.renderEmojiView()}
+            {this.renderForwardMessageBar()}
 					</View>
 				</ActionSheet>
 			);
@@ -585,7 +621,21 @@ class GiftedChat extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-	},
+  },
+  forwardButtonText: {
+    color: '#FFF',
+    fontWeight: '600',
+    fontSize: 20,
+    marginBottom: 12,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  forwardButtonConfirmText: {
+    backgroundColor: '#337AB7',
+  },
+  forwardButtonCancelText: {
+    backgroundColor: '#D9534F',
+  },
 });
 
 GiftedChat.childContextTypes = {
@@ -652,7 +702,9 @@ GiftedChat.defaultProps = {
 	inverted: true,
 	emojiConcise: false,
 	emojiShowPlusBar: false,
-	emojiShowHistoryBar: true,
+  emojiShowHistoryBar: true,
+  forwardMessageMode: false,
+  onForwardMessages: () => {}
 };
 
 GiftedChat.propTypes = {
@@ -707,7 +759,9 @@ GiftedChat.propTypes = {
 	textInputProps: PropTypes.object,
 	emojiConcise: PropTypes.bool,
 	emojiShowPlusBar: PropTypes.bool,
-	emojiShowHistoryBar: PropTypes.bool,
+  emojiShowHistoryBar: PropTypes.bool,
+  forwardMessageMode: PropTypes.bool,
+  onForwardMessages: PropTypes.func
 };
 
 export {

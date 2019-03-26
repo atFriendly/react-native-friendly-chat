@@ -5,7 +5,8 @@ module.exports = {
 	'en': {
 		Call: 'Call',
 		Cancel: 'Cancel',
-		Close: 'Close',
+    Close: 'Close',
+    Confirm: 'Confirm',
 		Download: 'Download',
 		LoadEarlierMessage: 'Load earlier messages',
 		MessagePlaceholder: 'Type a message...',
@@ -16,7 +17,8 @@ module.exports = {
 	'zh-tw': {
 		Call: '撥號',
 		Cancel: '取消',
-		Close: '關閉',
+    Close: '關閉',
+    Confirm: '確認',
 		Download: '下載',
 		LoadEarlierMessage: '載入更早訊息',
 		MessagePlaceholder: '在此輸入訊息...',
@@ -27,7 +29,8 @@ module.exports = {
 	'zh-cn': {
 		Call: '拨号',
 		Cancel: '取消',
-		Close: '关闭',
+    Close: '关闭',
+    Confirm: '确认',
 		Download: '下载',
 		LoadEarlierMessage: '载入更早信息',
 		MessagePlaceholder: '在此输入信息...',
