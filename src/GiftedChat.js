@@ -8,7 +8,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Animated, Platform, StyleSheet, View, Text, Keyboard } from 'react-native';
+import { Animated, Platform, StyleSheet, View, Text, Keyboard, TouchableOpacity } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
 import moment from 'moment';
@@ -62,7 +62,8 @@ class GiftedChat extends React.Component {
 			composerHeight: MIN_COMPOSER_HEIGHT,
 			messagesContainerHeight: null,
 			// typingDisabled: false,
-			emoticonsVisible: false,
+      emoticonsVisible: false,
+      forwardMessageMode: false,
 		};
 
 		this.onKeyboardWillShow = this.onKeyboardWillShow.bind(this);
@@ -562,8 +563,14 @@ class GiftedChat extends React.Component {
 		}
   }
   
+  setForwardMessageMode = mode => {
+    this.setState({
+      forwardMessageMode: mode
+    })
+  }
+
   renderForwardMessageBar = () => {
-    if (this.props.forwardMessageMode === true) {
+    if (this.state.forwardMessageMode === true) {
       return (
         <View>
           <TouchableOpacity 
@@ -703,7 +710,6 @@ GiftedChat.defaultProps = {
 	emojiConcise: false,
 	emojiShowPlusBar: false,
   emojiShowHistoryBar: true,
-  forwardMessageMode: false,
   onForwardMessages: () => {}
 };
 
@@ -760,7 +766,6 @@ GiftedChat.propTypes = {
 	emojiConcise: PropTypes.bool,
 	emojiShowPlusBar: PropTypes.bool,
   emojiShowHistoryBar: PropTypes.bool,
-  forwardMessageMode: PropTypes.bool,
   onForwardMessages: PropTypes.func
 };
 
