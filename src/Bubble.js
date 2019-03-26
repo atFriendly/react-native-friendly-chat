@@ -103,17 +103,6 @@ export default class Bubble extends React.PureComponent {
   }
 
   renderMessageImage() {
-    if (this.props.currentMessage.image) {
-      const { containerStyle, wrapperStyle, ...messageImageProps } = this.props;
-      if (this.props.renderMessageImage) {
-        return this.props.renderMessageImage(messageImageProps);
-      }
-      return <MessageImage {...messageImageProps} />;
-    }
-    return null;
-  }
-
-  	renderMessageImage() {
 		if (this.props.currentMessage.progress)
 			return null;
 		if (this.props.currentMessage.image) {
@@ -218,8 +207,8 @@ export default class Bubble extends React.PureComponent {
 			return this.props.renderCustomView(this.props);
 		}
 		return null;
-	}
-
+  }
+  
 	render() {
 		let uploadStyle = {};
 		if (this.props.currentMessage.progress) {
