@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, ViewPropTypes, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, } from 'react-native';
+import { View, ViewPropTypes, StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity, } from 'react-native';
 
 import Avatar from './Avatar';
 import Bubble from './Bubble';
@@ -17,7 +17,15 @@ export default class Message extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      selected: false
+      selected: false,
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.hasOwnProperty('forwardMessageMode') && nextProps.forwardMessageMode === false) {
+      this.setState({
+        selected: false
+      })
     }
   }
 
@@ -81,7 +89,7 @@ export default class Message extends React.PureComponent {
   }
   
   renderForwardButton() {
-    if (this.props.forwardMessageMode === true) {
+    if (this.props.hasOwnProperty('forwardMessageMode') && this.props.forwardMessageMode === true) {
       if (this.state.selected === true) {
         return (
           <TouchableOpacity accessibilityTraits="button"
@@ -90,8 +98,10 @@ export default class Message extends React.PureComponent {
               this.props.onUnSelect(this.props.currentMessage)
             }}
           >
-            <View style={checkboxStyles.checkbox}>
-              <Text>✓</Text>
+            <View style={checkboxStyles.checkboxBox}>
+              <View style={checkboxStyles.checkbox}>
+                <Text style={checkboxStyles.checkboxText}>{'✓'}</Text>
+              </View>
             </View>
           </TouchableOpacity>
         )
@@ -103,7 +113,9 @@ export default class Message extends React.PureComponent {
               this.props.onSelect(this.props.currentMessage)
             }}
           >
-            <View style={checkboxStyles.checkbox}>
+            <View style={checkboxStyles.checkboxBox}>
+              <View style={checkboxStyles.checkbox}>
+              </View>
             </View>
           </TouchableOpacity>
         )
@@ -166,13 +178,25 @@ const styles = {
 };
 
 const checkboxStyles = StyleSheet.create({
+  checkboxBox: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   checkbox: {
     margin: 2,
     borderColor: '#666',
     borderWidth: 1,
     height: 23,
     width: 23,
-  }
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  checkboxText: {
+    color: '#337AB7',
+    fontSize: 20,
+    fontWeight: '900'
+  },
 })
 
 Message.defaultProps = {

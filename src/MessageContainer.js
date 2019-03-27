@@ -37,6 +37,9 @@ export default class MessageContainer extends React.PureComponent {
     } else if (this.props.messages.length > 0 && nextProps.messages.length === 0) {
       this.attachKeyboardListeners(nextProps);
     }
+    if (nextProps.hasOwnProperty('forwardMessageMode') && nextProps.forwardMessageMode === false) {
+      selectedIds = []
+    }
   }
 
   attachKeyboardListeners = (props) => {
@@ -103,11 +106,8 @@ export default class MessageContainer extends React.PureComponent {
       previousMessage,
       nextMessage,
       position: item.user._id === this.props.user._id ? 'right' : 'left',
+      forwardMessageMode: this.props.forwardMessageMode
     };
-
-    if (this.props.forwardMessageMode === true) {
-      selectedIds = []
-    }
 
     if (this.props.renderMessage) {
       return this.props.renderMessage(messageProps);
@@ -168,6 +168,7 @@ export default class MessageContainer extends React.PureComponent {
           renderFooter={this.renderLoadEarlier}
           {...this.props.invertibleScrollViewProps}
           ListFooterComponent={this.renderHeaderWrapper}
+          extraData={this.props.forwardMessageMode}
         />
       </View>
     );

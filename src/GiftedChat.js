@@ -8,7 +8,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Animated, Platform, StyleSheet, View, Text, Keyboard, TouchableOpacity } from 'react-native';
+import { Animated, Platform, StyleSheet, View, Text, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
 import moment from 'moment';
@@ -321,11 +321,15 @@ class GiftedChat extends React.Component {
 	}
 
 	renderMessages() {
-		const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
+    const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
+    const mcProps = {
+      ...this.props,
+      forwardMessageMode: this.state.forwardMessageMode
+    }
 		return (
 			<AnimatedView style={{height: this.state.messagesContainerHeight,}}>
 				<MessageContainer
-					{...this.props}
+					{ ...mcProps }
 					onPress={this.onMessagePress.bind(this)}
 					invertibleScrollViewProps={this.invertibleScrollViewProps}
 					messages={this.getMessages()}
@@ -563,7 +567,7 @@ class GiftedChat extends React.Component {
 		}
   }
   
-  setForwardMessageMode = mode => {
+  setForwardMessageMode = (mode) => {
     this.setState({
       forwardMessageMode: mode
     })
@@ -572,31 +576,34 @@ class GiftedChat extends React.Component {
   renderForwardMessageBar = () => {
     if (this.state.forwardMessageMode === true) {
       return (
-        <View>
-          <TouchableOpacity 
-            onPress={() => {
-              //TODO:
-              this.props.onForwardMessages(this._messageContainerRef.getSelectedIds())
-            }}
-            accessibilityTraits="button">
-            <View>
-              <Text allowFontScaling={false} style={[styles.forwardButtonText, styles.forwardButtonConfirmText]}>
-                {I18n.get('Confirm')}
-              </Text>}
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            onPress={() => {
-              //TODO:
-              this.props.onForwardMessages([])
-            }}
-            accessibilityTraits="button">
-            <View>
-              <Text allowFontScaling={false} style={[styles.forwardButtonText, styles.forwardButtonConfirmText]}>
-                {I18n.get('Cancel')}
-              </Text>}
-            </View>
-          </TouchableOpacity>
+        <View style={styles.forwardMessageBar}>
+          <View style={{flex:0.5}}>
+            <TouchableWithoutFeedback 
+              onPress={() => {
+                this.props.onForwardMessages([])
+                this.setForwardMessageMode(false)
+              }}>
+              <View style={styles.forwardCancelButton}>
+                <Text allowFontScaling={false} style={[styles.forwardButtonText]}>
+                  {I18nUtil.get('Cancel')}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          <View style={{flex:0.5}}>
+            <TouchableWithoutFeedback 
+              onPress={() => {
+                this.props.onForwardMessages(this._messageContainerRef.getSelectedIds())
+                this.setForwardMessageMode(false)
+              }}
+              accessibilityTraits="button">
+              <View style={styles.forwardConfirmButton}>
+                <Text allowFontScaling={false} style={[styles.forwardButtonText]}>
+                  {I18nUtil.get('Confirm')}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
         </View>
       )
     } else {
@@ -629,19 +636,31 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
   },
+  forwardMessageBar: {
+    flexDirection:'row',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  forwardConfirmButton: {
+    flex: 0.5,
+    height: 50,
+    alignItems: 'center', 
+    justifyContent:'center',
+    backgroundColor: '#D9534F',
+  },
+  forwardCancelButton: {
+    flex: 0.5,
+    height: 50,
+    alignItems: 'center', 
+    justifyContent:'center',
+    backgroundColor: '#AAA',
+  },
   forwardButtonText: {
     color: '#FFF',
     fontWeight: '600',
     fontSize: 20,
-    marginBottom: 12,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  forwardButtonConfirmText: {
-    backgroundColor: '#337AB7',
-  },
-  forwardButtonCancelText: {
-    backgroundColor: '#D9534F',
   },
 });
 
