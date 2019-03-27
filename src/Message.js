@@ -66,6 +66,9 @@ export default class Message extends React.PureComponent {
 	}
 
 	renderAvatar() {
+    if (this.props.forwardMessageMode === true) {
+      return null
+    }
 		//一對一聊天不顯示頭像
 		if (!this.props.currentMessage.groupMessage)
 			return null;
@@ -98,7 +101,8 @@ export default class Message extends React.PureComponent {
               this.props.onUnSelect(this.props.currentMessage)
             }}
           >
-            <View style={checkboxStyles.checkboxBox}>
+            <View style={[checkboxStyles.checkboxBox, 
+                        { marginLeft: this.props.position === 'left' ? 0 : 8 }]}>
               <View style={checkboxStyles.checkbox}>
                 <Text style={checkboxStyles.checkboxText}>{'✓'}</Text>
               </View>
@@ -113,7 +117,8 @@ export default class Message extends React.PureComponent {
               this.props.onSelect(this.props.currentMessage)
             }}
           >
-            <View style={checkboxStyles.checkboxBox}>
+            <View style={[checkboxStyles.checkboxBox, 
+                        { marginLeft: this.props.position === 'left' ? 0 : 8 }]}>
               <View style={checkboxStyles.checkbox}>
               </View>
             </View>
@@ -181,7 +186,8 @@ const checkboxStyles = StyleSheet.create({
   checkboxBox: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginRight: 8
   },
   checkbox: {
     margin: 2,
