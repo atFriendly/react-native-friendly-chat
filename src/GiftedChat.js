@@ -63,7 +63,8 @@ class GiftedChat extends React.Component {
 			messagesContainerHeight: null,
 			// typingDisabled: false,
       emoticonsVisible: false,
-      forwardMessageMode: false,
+      forwardMessageMode: false, //轉傳訊息模式
+      selectedMsgId: null, //按下轉傳的訊息id
 		};
 
 		this.onKeyboardWillShow = this.onKeyboardWillShow.bind(this);
@@ -324,7 +325,8 @@ class GiftedChat extends React.Component {
     const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
     const mcProps = {
       ...this.props,
-      forwardMessageMode: this.state.forwardMessageMode
+      forwardMessageMode: this.state.forwardMessageMode,
+      selectedMsgId: this.state.selectedMsgId
     }
 		return (
 			<AnimatedView style={{height: this.state.messagesContainerHeight,}}>
@@ -567,9 +569,10 @@ class GiftedChat extends React.Component {
 		}
   }
   
-  setForwardMessageMode = (mode) => {
+  setForwardMessageMode = (mode, selectedMsgId = null) => {
     this.setState({
-      forwardMessageMode: mode
+      forwardMessageMode: mode,
+      selectedMsgId: selectedMsgId
     })
   }
 

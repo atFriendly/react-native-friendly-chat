@@ -22,10 +22,17 @@ export default class Message extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.hasOwnProperty('forwardMessageMode') && nextProps.forwardMessageMode === false) {
-      this.setState({
-        selected: false
-      })
+    if (nextProps.hasOwnProperty('forwardMessageMode')) {
+      if (nextProps.forwardMessageMode === false) {
+        this.setState({
+          selected: false
+        })
+      } else {
+        this.setState({
+          selected: nextProps.selectedMsgId === nextProps.currentMessage.realId
+        })
+      }
+      
     }
   }
 
@@ -93,7 +100,7 @@ export default class Message extends React.PureComponent {
   
   renderForwardButton() {
     if (this.props.hasOwnProperty('forwardMessageMode') && this.props.forwardMessageMode === true) {
-      if (this.state.selected === true) {
+      if (this.state.selected === true ) {
         return (
           <TouchableOpacity accessibilityTraits="button"
             onPress={() => {
