@@ -28,8 +28,12 @@ export default class Message extends React.PureComponent {
           selected: false
         })
       } else {
+        const firstSelect = nextProps.selectedMsgId === nextProps.currentMessage.realId
+        if (firstSelect) {
+          nextProps.onSelect(nextProps.currentMessage)
+        }
         this.setState({
-          selected: nextProps.selectedMsgId === nextProps.currentMessage.realId
+          selected: firstSelect
         })
       }
       
