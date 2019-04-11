@@ -596,7 +596,7 @@ class GiftedChat extends React.Component {
           <View style={{flex:0.5}}>
             <TouchableWithoutFeedback 
               onPress={() => {
-                this.props.onForwardMessages(this._messageContainerRef.getSelectedIds())
+                this.props.onForwardMessages(this._messageContainerRef.getSelectedMsgs())
                 this.setForwardMessageMode(false)
               }}
               accessibilityTraits="button">

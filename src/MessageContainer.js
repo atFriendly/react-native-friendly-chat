@@ -15,7 +15,7 @@ import { FlatList, View, StyleSheet, Platform, Keyboard } from 'react-native';
 import LoadEarlier from './LoadEarlier';
 import Message from './Message';
 
-let selectedIds = []
+let selectedMsgs = []
 export default class MessageContainer extends React.PureComponent {
 
   constructor(props) {
@@ -38,7 +38,7 @@ export default class MessageContainer extends React.PureComponent {
       this.attachKeyboardListeners(nextProps);
     }
     if (nextProps.hasOwnProperty('forwardMessageMode') && nextProps.forwardMessageMode === false) {
-      selectedIds = []
+      selectedMsgs = []
     }
   }
 
@@ -119,28 +119,28 @@ export default class MessageContainer extends React.PureComponent {
     />;
   }
 
-  onMessageSelect = (msg) => {
-    if (selectedIds.length == 0) {
-      selectedIds.push(msg.realId)
+  onMessageSelect = (newMsg) => {
+    if (selectedMsgs.length == 0) {
+      selectedMsgs.push(newMsg)
     } else {
-      const existed = selectedIds.find(id => {
-        return msg.realId === id
+      const existed = selectedMsgs.find(msg => {
+        return newMsg.realId === msg.realId
       })
       if (!existed) {
-        selectedIds.push(msg.realId)
+        selectedMsgs.push(newMsg)
       }
     }
   }
 
   onMessageUnSelect = (msg) => {
-    const index = selectedIds.indexOf(msg.realId)
+    const index = selectedMsgs.indexOf(msg)
     if (index > -1) {
-      selectedIds.splice(index, 1)
+      selectedMsgs.splice(index, 1)
     }
   }
 
-  getSelectedIds = () => {
-    return selectedIds || []
+  getSelectedMsgs = () => {
+    return selectedMsgs || []
   }
 
   renderHeaderWrapper() {
