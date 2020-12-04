@@ -550,7 +550,7 @@ class GiftedChat extends React.Component {
 				showPlusBar={this.props.emojiShowPlusBar}
 				showHistoryBar={this.props.emojiShowHistoryBar}
 				show={this.state.emoticonsVisible}
-				offsetBottom={45}
+				offsetBottom={0}
 			/>
 		);
 	}
